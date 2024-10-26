@@ -1,0 +1,149 @@
+syntax = "proto3";
+
+import "schnajangbodypillow/formats_n_shit.proto";
+
+message ChoiceEventStaticDataList {
+    repeated ChoiceEventStaticData list = 1;
+}
+
+message ChoiceEventStaticData {
+    int32 id = 1;
+    bool canSkip = 2;
+    optional PersonalityChoiceEventData personalityEvent = 3;
+    optional ActionChoiceEventData actionEvent = 4;
+    string eventType = 5;
+    CHOICE_EVENT_TYPE _type = 6;
+}
+
+enum CHOICE_EVENT_TYPE {
+    CHOICE_EVENT_TYPE_NONE = 0;
+    CHOICE_EVENT_TYPE_EVENT = 1;
+    COIN_EVENT = 2;
+}
+
+message PersonalityChoiceEventData {
+    bool canDuplicateChoose = 1;
+    ParticipantsInfo participantInfo = 2;
+    repeated PersonalityEventAdder adderInfo = 3;
+    PersonalityChoiceEventJudgementData judgement = 4;
+    repeated PersonalityEventResult eventResults = 5;
+    repeated int32 silenceCharacterUniqueIdList = 6;
+    repeated int32 notAllowedCharacterList = 7;
+}
+
+message ParticipantsInfo {
+    int32 min = 1;
+    int32 max = 2;
+    repeated int32 mustIncludeIdList = 3;
+}
+
+message PersonalityEventAdder {
+    string correctionCase = 1;
+    int32 adder = 2;
+}
+
+message PersonalityChoiceEventJudgementData {
+    int32 inclusiveValue = 1;
+    int32 exclusiveValue = 2;
+    int32 upDownType = 3;
+    string judgementType = 4;
+    JudgementType _type = 5;
+    repeated OnePersonalityChoiceEventJudgementData judgementDataList = 6;
+}
+
+enum JudgementType {
+    AND = 0;
+    OR = 1;
+}
+
+message OnePersonalityChoiceEventJudgementData {
+    string attributeType = 1;
+    // ATTRIBUTE_TYPE is in formats.proto
+    ATTRIBUTE_TYPE _attribute_type = 2;
+    float minProb = 3;
+}
+
+message PersonalityEventResult {
+    string eventResult = 1;
+    CHOICE_EVENT_RESULT _eventResult = 2;
+    repeated CommonChoiceEventResult eventResultDataList = 3;
+}
+
+enum CHOICE_EVENT_RESULT {
+    SUCCESS = 0;
+    FAILURE = 1;
+    CHOICE_EVENT_RESULT_NONE = 2;
+}
+
+message CommonChoiceEventResult {
+    int32 resultIndex = 1;
+    string resultCondition = 2;
+    int32 nextEventID = 3;
+    repeated EventResultStaticData eventResultDataList = 4;
+}
+
+message EventResultStaticData {
+    EventResultForm resultForm = 1;
+}
+
+message EventResultForm {
+    string resultEffectCondition1 = 1;
+    string resultEffectCondition2 = 2;
+    string resultEffectTarget = 3;
+    string resultEffect = 4;
+    string resultDescId = 5;
+    Reward itemReward = 6;
+    int32 nextBattleID = 7;
+}
+
+message Reward {
+    string type = 1;
+    // ELEMENT_TYPE is in formats.proto
+    ELEMENT_TYPE _rewardType = 2;
+    int32 rewardId = 3;
+    int32 num = 4;
+    float prob = 5;
+}
+
+message ActionChoiceEventData {
+    repeated EachActionChoiceEventData eachOptionList = 1;
+}
+
+message EachActionChoiceEventData {
+    int32 index = 1;
+    string cantSelectInThisCase = 2;
+    repeated CommonChoiceEventResult resultList = 3;
+}
+
+message EGOGiftStaticDataList {
+    repeated EGOGiftStaticData list = 1;
+}
+
+message EGOGiftStaticData {
+    int32 id = 1;
+    int32 iconId = 2;
+    int32 egoGrade = 3;
+    int32 useLimit = 4;
+    repeated int32 destroyConditionEventID = 5;
+    repeated int32 subEgoGiftAbilityIDList = 6;
+    string attributeType = 7;
+    // ATTRIBUTE_TYPE is in formats.proto
+    ATTRIBUTE_TYPE _attributeType = 8;
+    string type = 9;
+    repeated EGOGiftUpgradeStaticData upgradeDataList = 10;
+    repeated string tag = 11;
+    // MIRRORDUNGEON_EGOGIFT_TAG is in formats.proto
+    repeated MIRRORDUNGEON_EGOGIFT_TAG _tag = 12;
+    int32 price = 13;
+    bool lockType = 14;
+    bool isShowAtStart = 15;
+    string keyword = 16;
+    // MIRRORDUNGEON_EGOGIFT_KEYWORD is in formats.proto
+    MIRRORDUNGEON_EGOGIFT_KEYWORD _keyword = 17;
+}
+
+message EGOGiftUpgradeStaticData {
+    int32 upgradeLevel = 1;
+    int32 localizeID = 2;
+    repeated int32 abilityIDList = 3;
+}

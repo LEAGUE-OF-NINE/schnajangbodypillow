@@ -1,0 +1,879 @@
+syntax = "proto3";
+
+// Actual names: ResPacket_<MESSAGE-NAME>
+// Some has typo like ResPacekt.
+
+// If the definition doesn't have Rsp at the front,
+// Check this imported file instead.
+import "schnajangbodypillow/formats.proto";
+
+message HttpResponseFormat {
+    ServerInfo serverInfo = 1;
+    string state = 2;
+    optional UpdatedFormat updated = 3;
+    SynchronizedFormat synchronized = 4;
+    AnyType result = 5;
+
+    message AnyType {
+        // result is an extension of HttpResponseFormat.
+        // it can be any of the messages below.
+
+        // I'd use oneofs but we have to remember,
+        // the game doesn't actually use any protobuf.
+        
+        // We're just using protobuf to generate classes
+        // to (de)serialize jsons.
+    }
+}
+
+message RspNULL {}
+
+message RspGetHellsChickenState {
+    int32 dollsNum = 1;
+    repeated int32 rewardState = 2;
+}
+
+message RspAcquireHellsChickenReward {
+    int32 rewardState = 1;
+    repeated Element rewards = 2;
+}
+
+message RspGetAttendanceState {
+    repeated int32 rewardState = 1;
+    int32 consumption = 2;
+}
+
+message RspAcquireAttendanceReward {
+    repeated int32 rewardState = 1;
+    repeated Element rewards = 2;
+}
+
+message RspBattlePassReward {
+    repeated Element resultElements = 1;
+}
+
+message RspBattlePassExLevelReward {
+    repeated Element resultElements = 1;
+}
+
+message RspUseCoupon {
+    int32 state = 1;
+    repeated Element rewards = 2;
+    string backoffdate = 3; // DateUtil
+    int32 backoffduration = 4;
+}
+
+message RspGetUserCouponState {
+    bool ispossiblestate = 1;
+    string backoffdate = 2; // DateUtil
+    int32 backoffduration = 3;
+}
+
+message RspEnterExpDungeon {
+    int32 isclear = 1;
+}
+
+message RspExitExpDungeon {
+    int32 userExp = 1;
+    repeated StagePersonalityInfoFormat personalityinfos = 2;
+    repeated Element acquiredtickets = 3;
+    repeated Element rewards = 4;
+    ExpDungeonClearInfoFormat clearInfo = 5;
+}
+
+message RspSkipExpDungeon {
+    int32 userExp = 1;
+    repeated Element rewards = 2;
+}
+
+message RspEnterThreadDungeon {
+    int32 isClear = 1;
+    repeated AbnormalityUnlockInformationFormat abnormalityLogs = 2;
+}
+
+message RspExitThreadDungeon {
+    int32 userExp = 1;
+    repeated Element rewards = 2;
+    ThreadDungeonClearInfoFormat clearInfo = 3;
+}
+
+message RspGetDailyDungeonInfo {
+    repeated ExpDungeonClearInfoFormat expDungeonClearInfo = 1;
+    repeated ThreadDungeonClearInfoFormat threadDungeonClearInfo = 2;
+    string date = 3;
+}
+
+message RspSkipThreadDungeon {
+    int32 userExp = 1;
+    repeated Element rewards = 2;
+}
+
+message RspGetDailyLoginState {
+    int32 weekid = 1;
+    int32 id = 2;
+    repeated DailyLoginRewardStateFormat rewardstates = 3;
+}
+
+message RspAcquireDailyLoginReward {
+    repeated Element rewards = 1;
+}
+
+message RspGetDanteNoteState {
+    int32 page = 1;
+    int32 todayPage = 2;
+}
+
+message RspGetStageProgressRateRewardCommand {
+    repeated Element rewardList = 1;
+}
+
+message RspEnterStageBattleCommand {
+    repeated AbnormalityUnlockInformationFormat abnormalityLogs = 1;
+}
+
+message RspExitStageBattleCommand {
+    int32 stageid = 1;
+    bool iswin = 2;
+    int32 cleartype = 3;
+    int32 addexptouser = 4;
+    repeated StagePersonalityInfoFormat personalityinfos = 5;
+    repeated Element expticket = 6;
+    repeated Element rewarditem = 7;
+    repeated Element exrewarditem = 8;
+    repeated Element firstrewarditem = 9;
+    Element givebackstaminabyDefeat = 10;
+    repeated AbnormalityUnlockInformationFormat abnormalityLogs = 11;
+}
+
+message RspGetDungeonSaveInfoAll {
+    StoryDungeonSaveInfoFormat storySaveInfo = 1;
+    MirrorDungeonSaveInfoFormat mirrorOriginSaveInfo = 2;
+    RailwayDungeonSaveInfoFormat railwaySaveInfo = 3;
+    StoryMirrorDungeonSaveInfoFormat storyMirrorSaveInfo = 4;
+    repeated MirrorDungeonClearInfoFormat mirrorDungeonClearInfos = 5;
+    repeated MirrorDungeonHistoryFormat mirrorDungeonHistories = 6;
+}
+
+message RspGetStoryDungeonSaveInfo {
+    StoryDungeonSaveInfoFormat saveInfo = 1;
+}
+
+message RspEnterStoryDungeon {
+    StoryDungeonSaveInfoFormat saveInfo = 1;
+    repeated int32 nodesRecord = 2;
+}
+
+message RspReEnterStoryDungeon {
+    StoryDungeonSaveInfoFormat saveInfo = 1;
+    repeated int32 nodesRecord = 2;
+    uint32 isAllDie = 3;
+}
+
+message RspExitStoryDungeonCommand {
+    StoryDungeonSaveInfoFormat saveInfo = 1;
+    bool iswin = 2;
+    int32 cleartype = 3;
+    int32 addexptouser = 4;
+    repeated StagePersonalityInfoFormat personalityinfos = 5;
+    repeated Element expticket = 6;
+    repeated Element rewarditem = 7;
+    repeated Element exrewarditem = 8;
+    repeated Element firstrewarditem = 9;
+    Element givebackstaminabyDefeat = 10;
+    repeated DungeonStatisticsDataFormat statistics = 11;
+    bool isGacksung = 12;
+}
+
+message RspEnterStoryDungeonMapNodeCommand {
+    DungeonMapNodeFormat node = 1;
+    int32 nr = 2;
+    repeated AbnormalityUnlockInformationFormat abnormalityLogs = 3;
+}
+
+message RspUpdateStoryDungeonMapNodeCommand {
+    repeated DungeonChoiceEventSaveDataFormat prevChoiceEvent = 1;
+    repeated DungeonMapEgoGiftFormat currentEgoGifts = 2;
+}
+
+message RspEnterStoryDungeonMapNodeBattleAfterChoice {
+    repeated AbnormalityUnlockInformationFormat abnormalityLogs = 1;
+    uint32 isAllDie = 2;
+}
+
+message RspExitStoryDungeonMapNodeCommand {
+    StoryDungeonSaveInfoFormat saveInfo = 1;
+    repeated AbnormalityUnlockInformationFormat abnormalityLogs = 2;
+    repeated DungeonMapEgoGiftFormat acquiredEgogifts = 3;
+    uint32 isAllDie = 4;
+}
+
+message RspReturnSavePointStoryDungeonMap {
+    StoryDungeonCurrentInfoFormat currentInfo = 1;
+}
+
+message RspExitStoryDungeonMapNodeByForcely {
+    StoryDungeonCurrentInfoFormat currentInfo = 1;
+    uint32 isAllDie = 2;
+}
+
+message RspExitStoryCommand {
+    repeated Element rewarditem = 1;
+    repeated Element exrewarditem = 2;
+}
+
+message RspGetAbnormalityLogData {
+    repeated AbnormalityUnlockInformationFormat logdatas = 1;
+}
+
+message RspUpdateAbnormalityLogData {
+    repeated AbnormalityUnlockInformationFormat abnormalityLogs = 1;
+}
+
+message RspGetStoryDungeonNodeRecord {
+    repeated int32 nodes = 1;
+}
+
+message RspClaimEventRewardCommand {
+    repeated Element acquiredElements = 1;
+}
+
+message RspClaimEventReward_ALLCommand {
+    repeated Element acquiredElements = 1;
+}
+
+message RspPlayGacha {
+    repeated GachaLogDetail gachaLogDetails = 1;
+}
+
+message RspGetGachaLogAll {
+    repeated GachaLog gachaLogs = 1;
+}
+
+message RspUseGachaPityPoint {
+    repeated GachaLogDetail gachaLogDetails = 1;
+}
+
+message RspClaimClosedGachaRewards {
+    repeated uint32 pityPointDataList = 1;
+}
+
+message RspInitPurchase {
+    string resultState = 1;
+}
+
+message RspUpdateSteamPendingPurchase {
+    repeated string finalizedTransactionIds = 1;
+}
+
+message RspGetSteamWalletCurrency {
+    string walletCurrency = 1;
+}
+
+message RspUseItem {
+    repeated Element pickedUpElementList = 1;
+    repeated Element resultElementList = 2;
+}
+
+message RspUsePersonalityExpItem {
+    PersonalityFormat resultPersonality = 1;
+}
+
+message RspLoadUserDataAll {
+    string secession_Date = 1; // DateUtil
+    UserPublicProfileWithSupportersFormat profile = 2;
+    int32 danteNoteTodayPage = 3;
+    repeated DailyLoginRewardStateFormat dailyLoginRewardStates = 4;
+    int32 dailyLoginWeekId = 5;
+    int32 dailyLoginId = 6;
+    int32 showedWeekByMinistory = 7;
+    string date = 8;
+}
+
+message RspCheckSeasonLog {
+    SeasonLogFormat seasonLog = 1;
+}
+
+message RspSignInAsGuest {
+    UserAuthFormat userAuth = 1;
+}
+
+message RspSignInAsNewGuest {
+    UserAuthFormat userAuth = 1;
+    string authToken = 2;
+}
+
+message RspSignInAsGoogle {
+    UserAuthFormat userAuth = 1;
+    AccountInfoFormat accountInfo = 2;
+}
+
+message RspLinkWithGoogle {
+    UserAuthFormat userAuth = 1;
+    AccountInfoFormat accountInfo = 2;
+}
+
+message RspSignInAsApple {
+    UserAuthFormat userAuth = 1;
+    AccountInfoFormat accountInfo = 2;
+}
+
+message RspLinkWithApple {
+    UserAuthFormat userAuth = 1;
+    AccountInfoFormat accountInfo = 2;
+}
+
+message RspSignInAsSteam {
+    UserAuthFormat userAuth = 1;
+    AccountInfoFormat accountInfo = 2;
+    string walletCurrency = 3;
+}
+
+message RspRefreshLinkAuth {
+    LinkAuthFormat linkAuth = 1;
+    string state = 2; // LinkAuthState
+}
+
+message RspGetInfoOfLinkWith {
+    string details = 1; // LinkAuthDetails
+    string state = 2; // LinkAuthState
+}
+
+message RspLinkWithAnother {
+    string state = 1; // LinkAuthState
+}
+
+message RspTryToSecede {
+    string secessionDate = 1; // DateUtil
+}
+
+message RspCheckClientVersion {
+    int64 timeoffset = 1;
+}
+
+message RspGetBanDetails {
+    string startDate = 1; // DateUtil
+    string endDate = 2; // DateUtil
+    string reason = 3;
+}
+
+message RspUnLinkWithAnother {
+    AccountInfoFormat accountInfo = 1;
+}
+
+message RspRefreshMailBox {
+    repeated MailFormat initializedMailList = 1;
+}
+
+message RspUnsealMails {
+    repeated Element attachedElements = 1;
+}
+
+message RspGetMailLogAll {
+    repeated MailLog mailLogs = 1;
+}
+
+message RspGetMirrorDungeonSaveInfoAll {
+    MirrorDungeonSaveInfoFormat originSaveInfo = 1;
+    MirrorDungeonSaveInfoFormat simulationsaveInfo = 2;
+}
+
+message RspGetMirrorDungeonSaveInfo {
+    MirrorDungeonSaveInfoFormat saveInfo = 1;
+}
+
+message RspEnterMirrorDungeonCommand {
+    MirrorDungeonSaveInfoFormat saveInfo = 1;
+    repeated MirrorDungeonGetCharacterInfoFormat recentCharacterList = 2;
+}
+
+message RspReEnterMirrorDungeonCommand {
+    MirrorDungeonSaveInfoFormat saveInfo = 1;
+}
+
+message RspUpdateMirrorDungeonCommand {
+    MirrorDungeonSaveInfoFormat saveInfo = 1;
+}
+
+message RspSelectFormationAndCreateThemePoolMirrorDungeonCommand {
+    MirrorDungeonSaveInfoFormat saveInfo = 1;
+}
+
+message RspRecreateThemeFloorPoolMirrorDungeonCommand {
+    MirrorDungeonSaveInfoFormat saveInfo = 1;
+}
+
+message RspSelectThemeFloorMirrorDungeonCommand {
+    MirrorDungeonSaveInfoFormat saveInfo = 1;
+}
+
+message RspExitMirrorDungeonCommand {
+    int32 isEndDungeon = 1;
+    int32 isclear = 2;
+    repeated DungeonStatisticsDataFormat statistics = 3;
+}
+
+message RspAcquireMirrorDungeonLastReward {
+    repeated Element rewardList = 1;
+    MirrorDungeonSaveInfoFormat saveInfo = 2;
+    MirrorDungeonAcquiredChipFormat acquiredChip = 3;
+    MirrorDungeonHistoryFormat history = 4;
+    MirrorDungeonStartBuffInfoFormat startBuffInfo = 5;
+}
+
+message RspEnterMirrorDungeonMapNodeCommand {
+    repeated AbnormalityUnlockInformationFormat abnormalityLogs = 1;
+    repeated int32 passingNodeIds = 2;
+    DungeonMapNodeFormat currentNode = 3;
+    UserMirrorDungeonShopDataFormat shopInfo = 4;
+    repeated DungeonMapEgoGiftFormat egogifts = 5;
+    repeated MirrorDungeonPrevUnitInfoFormat prevdul = 6;
+    repeated int32 preves = 7;
+}
+
+message RspUpdateMirrorDungeonMapNodeCommand {
+    repeated DungeonChoiceEventSaveDataFormat prevChoiceEvent = 1;
+    repeated DungeonMapEgoGiftFormat currentEgoGifts = 2;
+    repeated MirrorDungeonSaveUnitInfoFormat dungeonUnitList = 3;
+}
+
+message RspEnterMirrordungeonMapNodeBattleAfterChoice {
+    repeated AbnormalityUnlockInformationFormat abnormalityLogs = 1;
+}
+
+message RspExitMirrorDungeonMapNodeCommand {
+    MirrorDungeonCurrentInfoFormat currentInfo = 1;
+    repeated AbnormalityUnlockInformationFormat abnormalityLogs = 2;
+}
+
+message RspExitMirrorDungeonMapNodeByForcely {
+    MirrorDungeonCurrentInfoFormat currentInfo = 1;
+}
+
+message RspAcquireRewardEgoGiftsMirrorDungeonCommand {
+    repeated DungeonMapEgoGiftFormat egoGifts = 1;
+    repeated RandomDungeonEncounterRewardEventInfoFormat remainRewardEvent = 2;
+    repeated MirrorDungeonSaveUnitInfoFormat dungeonUnitList = 3;
+    MirrorDungeonSaveInfoFormat saveinfo = 4;
+}
+
+message RspAcquireRewardEgoGiftsWithEnemyBufMirrorDungeonCommand {
+    repeated DungeonMapEgoGiftFormat egoGifts = 1;
+    repeated RandomDungeonEncounterRewardEventInfoFormat remainRewardEvent = 2;
+    repeated MirrorDungeonSaveUnitInfoFormat dungeonUnitList = 3;
+    repeated int32 levelAdders = 4;
+    MirrorDungeonSaveInfoFormat saveinfo = 5;
+}
+
+message RspRejectRewardEgoGiftsMirrorDungeonCommand {
+    repeated RandomDungeonEncounterRewardEventInfoFormat remainRewardEvent = 1;
+    MirrorDungeonSaveInfoFormat saveinfo = 2;
+}
+
+message RspRejectRewardEgoGiftWithEnemyBufsMirrorDungeonCommand {
+    repeated DungeonMapEgoGiftFormat egoGifts = 1;
+    repeated int32 levelAdders = 2;
+    repeated RandomDungeonEncounterRewardEventInfoFormat remainRewardEvent = 3;
+    MirrorDungeonSaveInfoFormat saveinfo = 4;
+}
+
+message RspAcquireCharacterEventDataMirrorDungeonCommand {
+    repeated MirrorDungeonSaveUnitInfoFormat dungeonUnitList = 1;
+    repeated RandomDungeonEncounterRewardEventInfoFormat remainRewardEvent = 2;
+}
+
+message RspPersonalityLevelUpEventMirrorDungeonCommand {
+    repeated MirrorDungeonSaveUnitInfoFormat dungeonUnitList = 1;
+    repeated RandomDungeonEncounterRewardEventInfoFormat remainRewardEvent = 2;
+}
+
+message RspAcquireMirrorDungeonBattleRewardCommand {
+    MirrorDungeonSaveInfoFormat saveinfo = 1;
+}
+
+message RspGetMirrorDungeonEgoGiftRecordCommand {
+    repeated int32 acquiredegogifts = 1;
+}
+
+message RspPurchaseHealMirrorDungeon {
+    int32 cost = 1;
+    repeated MirrorDungeonSaveUnitInfoFormat dungeonUnitList = 2;
+    UserMirrorDungeonShopDataFormat shopInfo = 3;
+}
+
+message RspPurchaseFormationMirrorDungeon {
+    int32 cost = 1;
+    repeated MirrorDungeonSaveUnitInfoFormat dungeonUnitList = 2;
+    UserMirrorDungeonShopDataFormat shopInfo = 3;
+    MirrorDungeonPrevUnitInfoFormat prevUnitInfo = 4;
+}
+
+message RspPurchaseUpgradePersonalityMirrorDungeon {
+    int32 cost = 1;
+    repeated MirrorDungeonSaveUnitInfoFormat dungeonUnitList = 2;
+    UserMirrorDungeonShopDataFormat shopInfo = 3;
+}
+
+message RspPurchaseEgoGiftMirrorDungeon {
+    int32 cost = 1;
+    repeated DungeonMapEgoGiftFormat egogifts = 2;
+    UserMirrorDungeonShopDataFormat shopInfo = 3;
+    repeated MirrorDungeonSaveUnitInfoFormat dungeonUnitList = 4;
+}
+
+message RspSellEgoGift {
+    int32 cost = 1;
+    repeated DungeonMapEgoGiftFormat egogifts = 2;
+}
+
+message RspRefreshShopEgoGiftsMirrorDungeonCommand {
+    int32 cost = 1;
+    int32 consumedChipIn = 2;
+    UserMirrorDungeonShopDataFormat shopInfo = 3;
+}
+
+message RspGetStartBuffFInfoMirrorDungeon {
+    MirrorDungeonStartBuffInfoFormat startBuffInfo = 1;
+}
+
+message RspPurchaseStartBuffMirrorDungeon {
+    MirrorDungeonStartBuffInfoFormat startBuffInfo = 1;
+}
+
+message RspEnableSpecialStartBuffMirrorDungeon {
+    MirrorDungeonStartBuffInfoFormat startBuffInfo = 1;
+}
+
+message RspDisableStartBuffMirrorDungeon {
+    MirrorDungeonStartBuffInfoFormat startBuffInfo = 1;
+}
+
+message RspRemoveMirrorDungeonEgoGift {
+    repeated DungeonMapEgoGiftFormat egs = 1;
+}
+
+message RspMirrorDungeonGiveUpSelectingEgoGift {
+    repeated RandomDungeonEncounterRewardEventInfoFormat remainRewardEvent = 1;
+}
+
+message RspGetMirrorDungeonPreset {
+    repeated MirrorDungeonFormationFormat recentCharacterList = 1;
+}
+
+message RspGetMirrorDungeonRewardChip {
+    MirrorDungeonAcquiredChipFormat acquiredChip = 1;
+    repeated MirrorDungeonAcquiredRewardFormat rewardList = 2;
+}
+
+message RspSelectMirrorDungeonRandomPickFormation {
+    repeated MirrorDungeonFormationFormat formation = 1;
+}
+
+message RspAcquireStartEgoGiftsMirrorDungeonCommand {
+    repeated DungeonMapEgoGiftFormat egoGifts = 1;
+    repeated MirrorDungeonEgoGiftPoolSetFormat startEgoGiftPoolSets = 2;
+    int32 startEgoGiftCreatedCount = 3;
+}
+
+message RspRefreshStartEgoGiftsMirrorDungeonCommand {
+    repeated MirrorDungeonEgoGiftPoolSetFormat startEgoGiftPoolSets = 1;
+    int32 startEgoGiftCreatedCount = 2;
+}
+
+message RspUpgradeEgoGiftMirrorDungeonCommand {
+    int32 cost = 1;
+    DungeonMapEgoGiftFormat egoGift = 2;
+    repeated MirrorDungeonSaveUnitInfoFormat dungeonUnitList = 3;
+}
+
+message RspCombineEgoGiftMirrorDungeonCommand {
+    DungeonMapEgoGiftFormat resultEgoGift = 1;
+    bool isSuccess = 2;
+    repeated DungeonMapEgoGiftFormat egoGifts = 3;
+    repeated MirrorDungeonSaveUnitInfoFormat dungeonUnitList = 4;
+}
+
+message RspPreviewMirrorDungeonExitReward {
+    MirrorDungeonAcquiredChipFormat acquiredChip = 1;
+    repeated MirrorDungeonExitRewardFormat rewardList = 2;
+}
+
+message RspAcquireMirrorDungeonExitReward {
+    repeated Element rewardList = 1;
+    MirrorDungeonSaveInfoFormat saveInfo = 2;
+    MirrorDungeonAcquiredChipFormat acquiredChip = 3;
+    MirrorDungeonHistoryFormat history = 4;
+    MirrorDungeonStartBuffInfoFormat startBuffInfo = 5;
+}
+
+message RspAcquireMissionRewardsCommand {
+    repeated Element acquiredElements = 1;
+}
+
+message RspGetTermsOfUseStateAll {
+    int32 version = 1;
+    repeated TermsOfUseState termsOfUseStateList = 2;
+}
+
+message RspGetTheaterInfo {
+    UserTheaterInfoFormat theaterInfo = 1;
+}
+
+message RspCompleteTheaterStory {
+    bool isRewarded = 1;
+    repeated Element acquiredElements = 2;
+    UserTheaterInfoFormat theaterInfo = 3;
+}
+
+message RspGetUserBanners {
+    repeated UserBannerDataFormat banners = 1;
+}
+
+message RspGetFriendsData {
+    repeated UserPublicProfileFormat friendprofileList = 1;
+    repeated UserPublicProfileFormat sendprofileList = 2;
+    repeated UserPublicProfileFormat receiveprofileList = 3;
+}
+
+message RspFindFriend {
+    bool success = 1;
+    UserPublicProfileFormat friendprofile = 2;
+}
+
+message RspGetRecommendFriends {
+    repeated UserPublicProfileFormat recomendedFriends = 1;
+}
+
+message RspSendFriendRequest {
+    uint32 success = 1;
+    UserPublicProfileFormat receiverprofile = 2;
+}
+
+message RspAcceptReceivedFriendRequest {
+    uint32 success = 1;
+}
+
+message RspGetFriendSupportPersonalities {
+    repeated SupportPersonalitySlotFormat supportpersonalities = 1;
+}
+
+message RspGetFriendSupportPersonalitiesByCharacterId {
+    repeated SupportPersonalityFormat supportpersonalities = 1;
+}
+
+message RspGetProfileTicketDecoDatas {
+    repeated UserProfileBorderFormat leftBorders = 1;
+    repeated UserProfileBorderFormat rightBorders = 2;
+    repeated UserProfileEgobackgroundFormat egoBackgrounds = 3;
+}
+
+message RspUpdateProfileTicketDeco {
+    int32 leftBorderId = 1;
+    int32 rightBorderId = 2;
+    int32 egoBackgroundId = 3;
+}
+
+message RspPlayVendingMachine {
+    repeated ItemFormat itemConsumptions = 1;
+}
+
+message RspAcquireEgoGiftEventStoryMirrorDungeonCommand {
+    repeated DungeonMapEgoGiftFormat egoGifts = 1;
+    repeated RandomDungeonEncounterRewardEventInfoFormat remainRewardEvent = 2;
+}
+
+message RspAcquireCharacterEventDataStoryMirrorDungeonCommand {
+    repeated StoryMirrorDungeonSaveUnitInfoFormat dungeonUnitList = 1;
+    repeated RandomDungeonEncounterRewardEventInfoFormat remainRewardEvent = 2;
+}
+
+message RspPersonalityLevelUpEventStoryMirrorDungeonCommand {
+    repeated StoryMirrorDungeonSaveUnitInfoFormat dungeonUnitList = 1;
+    repeated RandomDungeonEncounterRewardEventInfoFormat remainRewardEvent = 2;
+}
+
+message RspEnterStoryMirrorDungeonCommand {
+    StoryMirrorDungeonSaveInfoFormat saveInfo = 1;
+}
+
+message RspReEnterStoryMirrorDungeonCommand {
+    StoryMirrorDungeonSaveInfoFormat saveInfo = 1;
+}
+
+message RspUpdateStoryMirrorDungeonCommand {
+    StoryMirrorDungeonSaveInfoFormat saveInfo = 1;
+}
+
+message RspExitStoryMirrorDungeonCommand {
+    StoryMirrorDungeonSaveInfoFormat saveInfo = 1;
+    int32 isclear = 2;
+    repeated DungeonStatisticsDataFormat statistics = 3;
+    int32 cleartype = 4;
+    int32 adduserexp = 5;
+    repeated StagePersonalityInfoFormat personalityinfos = 6;
+    repeated Element normalrewards = 7;
+    repeated Element exrewards = 8;
+    repeated Element firstrewarditem = 9;
+    repeated Element expticket = 10;
+    Element givebackstaminabyDefeat = 11;
+}
+
+message RspEnterStoryMirrorDungeonMapNodeCommand {
+    repeated AbnormalityUnlockInformationFormat abnormalityLogs = 1;
+    repeated int32 passingNodeIds = 2;
+    DungeonMapNodeFormat currentNode = 3;
+    UserMirrorDungeonShopDataFormat shopInfo = 4;
+    repeated DungeonMapEgoGiftFormat egoGifts = 5;
+    repeated MirrorDungeonPrevUnitInfoFormat prevdul = 6;
+    repeated int32 preves = 7;
+}
+
+message RspUpdateStoryMirrorDungeonMapNodeCommand {
+    repeated DungeonChoiceEventSaveDataFormat prevChoiceEvent = 1;
+    repeated DungeonMapEgoGiftFormat currentEgoGifts = 2;
+    repeated StoryMirrorDungeonSaveUnitInfoFormat dungeonUnitList = 3;
+}
+
+message RspEnterStoryMirrorDungeonMapNodeBattleAfterChoiceCommand {
+    repeated AbnormalityUnlockInformationFormat abnormalityLogs = 1;
+}
+
+message RspExitStoryMirrorDungeonMapNodeCommand {
+    StoryMirrorDungeonCurrentInfoFormat currentInfo = 1;
+    repeated AbnormalityUnlockInformationFormat abnormalityLogs = 2;
+}
+
+message RspAcquireRewardEgoGiftsStoryMirrorDungeonCommand {
+    repeated DungeonMapEgoGiftFormat egoGifts = 1;
+    repeated RandomDungeonEncounterRewardEventInfoFormat remainRewardEvent = 2;
+    repeated StoryMirrorDungeonSaveUnitInfoFormat dungeonUnitList = 3;
+}
+
+message RspRejectRewardEgoGiftsStoryMirrorDungeonCommand {
+    repeated RandomDungeonEncounterRewardEventInfoFormat remainRewardEvent = 1;
+}
+
+message RspPurchaseHealStoryMirrorDungeonCommand {
+    int32 cost = 1;
+    repeated StoryMirrorDungeonSaveUnitInfoFormat dungeonUnitList = 2;
+    UserMirrorDungeonShopDataFormat shopInfo = 3;
+}
+
+message RspPurchaseFormationStoryMirrorDungeonCommand {
+    int32 cost = 1;
+    repeated StoryMirrorDungeonSaveUnitInfoFormat dungeonUnitList = 2;
+    UserMirrorDungeonShopDataFormat shopInfo = 3;
+    MirrorDungeonPrevUnitInfoFormat prevUnitInfo = 4;
+}
+
+message RspPurchaseUpgradePersonalityStoryMirrorDungeonCommand {
+    int32 cost = 1;
+    repeated StoryMirrorDungeonSaveUnitInfoFormat dungeonUnitList = 2;
+    UserMirrorDungeonShopDataFormat shopInfo = 3;
+}
+
+message RspPurchaseEgoGiftStoryMirrorDungeonCommand {
+    int32 cost = 1;
+    repeated DungeonMapEgoGiftFormat egogifts = 2;
+    UserMirrorDungeonShopDataFormat shopInfo = 3;
+    repeated StoryMirrorDungeonSaveUnitInfoFormat dungeonUnitList = 4;
+}
+
+message RspSellEgoGiftStoryMirrorDungeonCommand {
+    int32 cost = 1;
+    repeated DungeonMapEgoGiftFormat egogifts = 2;
+}
+
+message RspAcquireStartEgoGiftsStoryMirrorDungeonCommand {
+    repeated DungeonMapEgoGiftFormat egoGifts = 1;
+    repeated MirrorDungeonEgoGiftPoolSetFormat startEgoGiftPoolSets = 2;
+    int32 startEgoGiftCreatedCount = 3;
+}
+
+message RspUpgradeEgoGiftStoryMirrorDungeonCommand {
+    int32 cost = 1;
+    DungeonMapEgoGiftFormat egoGift = 2;
+    repeated StoryMirrorDungeonSaveUnitInfoFormat dungeonUnitList = 3;
+}
+
+message RspCombineEgoGiftStoryMirrorDungeonCommand {
+    DungeonMapEgoGiftFormat resultEgoGift = 1;
+    bool isSuccess = 2;
+    repeated DungeonMapEgoGiftFormat egoGifts = 3;
+    repeated StoryMirrorDungeonSaveUnitInfoFormat dungeonUnitList = 4;
+}
+
+message RspRefreshStartEgoGiftsStoryMirrorDungeonCommand {
+    repeated MirrorDungeonEgoGiftPoolSetFormat startEgoGiftPoolSets = 1;
+    int32 startEgoGiftCreatedCount = 2;
+}
+
+message RspRefreshShopEgoGiftsStoryMirrorDungeonCommand {
+    int32 cost = 1;
+    UserMirrorDungeonShopDataFormat shopInfo = 2;
+}
+
+message RspRemoveStoryMirrorDungeonEgoGift {
+    repeated DungeonMapEgoGiftFormat egs = 1;
+}
+
+message RspEnterRailwayDungeon {
+    RailwayDungeonSaveInfoFormat saveInfo = 1;
+    RailwayNodeDataFormat startNodeData = 2;
+}
+
+message RspEnterRailwayDungeonMapNodeCommand {
+    uint32 nodeid = 1;
+    repeated int32 deletedNodeIds = 2;
+    repeated AbnormalityUnlockInformationFormat abnormalityLogs = 3;
+    repeated RailwayUnitStatusFormat prevStatusData = 4;
+    repeated RailwayEGOStockFormat prevEgoStockData = 5;
+    SaveDataForRailwayDungeon prevEnemyData = 6;
+    int32 prevClearNodeId = 7;
+    int32 currentNodeId = 8;
+}
+
+message RspGetRailwayDungeonNodeAndLogAllCommand {
+    repeated RailwayNodeDataFormat nodeDatas = 1;
+    repeated RailwayLogDataFormat logDatas = 2;
+}
+
+message RspExitRailwayDungeonMapNodeCommand {
+    RailwayDungeonSaveInfoFormat saveInfo = 1;
+    repeated AbnormalityUnlockInformationFormat abnormalityLogs = 2;
+    RailwayNodeDataFormat nodeData = 3;
+    repeated RailwayNodeDataFormat updateNodeDatas = 4;
+}
+
+message RspExitRailwayDungeonRestNodeCommand {
+    RailwayDungeonSaveInfoFormat saveInfo = 1;
+    repeated int32 deletedNodeIds = 2;
+    RailwayNodeDataFormat nodeData = 3;
+}
+
+message RspExitRailwayDungeonCommand {
+    bool isclear = 1;
+    RailwayDungeonSaveInfoFormat saveInfo = 2;
+    RailwayLogDataFormat currentLog = 3;
+    repeated Element rewards = 4;
+}
+
+message RspGiveUpRailwayDungeonNodeCommand {
+    RailwayDungeonSaveInfoFormat saveInfo = 1;
+    repeated AbnormalityUnlockInformationFormat abnormalityLogs = 2;
+    RailwayNodeDataFormat nodeData = 3;
+}
+
+message RspGiveUpRailwayDungeonNodeInBattle {
+    RailwayNodeDataFormat nodeData = 1;
+    repeated AbnormalityUnlockInformationFormat abnormalityLogs = 2;
+}
+
+message RspSelectRailwayDungeonBuffCommand {
+    RailwayDungeonSaveInfoFormat saveInfo = 1;
+    RailwayNodeDataFormat nodeData = 2;
+}
+
+message RspAcquireRailwayDungeonReward {
+    RailwayDungeonSaveInfoFormat saveInfo = 1;
+    repeated Element rewardList = 2;
+}

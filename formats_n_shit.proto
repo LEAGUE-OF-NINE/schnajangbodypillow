@@ -1,0 +1,1178 @@
+syntax = "proto3";
+
+// Not sure what to name this file.
+// Most of them has format, some doesn't.
+// The order of definitions is weird.
+// It works, so whatever.
+
+message AbnormalityUnlockInformationFormat {
+    int32 id = 1;
+    int32 k = 2;
+    repeated int32 s = 3;
+    repeated int32 p = 4;
+    repeated PartResistFormat ps = 5;
+}
+
+message PartResistFormat {
+    int32 id = 1;
+    repeated int32 attr = 2;
+    repeated int32 atkr = 3;
+}
+
+message UserMirrorDungeonShopDataFormat {
+    int32 ph = 1;
+    int32 pup = 2;
+    int32 upid = 3;
+    repeated int32 peg = 4;
+    int32 pcf = 5;
+    int32 pabu = 6;
+    int32 pueg = 7;
+    repeated int32 egpool = 8;
+    int32 pseg = 9;
+    int32 rc = 10;
+    int32 fre = 11;
+}
+
+message ExpDungeonClearInfoFormat {
+    uint32 dungeonid = 1;
+    uint32 clearnumber = 2;
+}
+
+message ThreadDungeonClearInfoFormat {
+    uint32 dungeonid = 1;
+    uint32 clearnumber = 2;
+    uint32 dungeonlevel = 3;
+}
+
+message DailyLoginRewardStateFormat {
+    int32 weekid = 1;
+    int32 id = 2;
+}
+
+message UserProfileBorderFormat {
+    int32 id = 1;
+    string date = 2;
+}
+
+message UserProfileEgobackgroundFormat {
+    int32 id = 1;
+    string date = 2;
+}
+
+message SeasonLogFormat {
+    int32 seasonTo = 1;
+    int32 seasonFrom = 2;
+    repeated Element unreceivedBattlePassRewards = 3;
+    repeated ItemFormat lostPieces = 4;
+    repeated ItemFormat acquiredFromLostPieces = 5;
+    repeated ItemFormat lostPackages = 6;
+    repeated ItemFormat acquiredFromLostPackages = 7;
+    repeated ItemFormat lostGlobalPieces = 8;
+    repeated ItemFormat acquiredFromLostGlobalPieces = 9;
+    string date = 10;
+}
+
+message UpdatedFormat {
+    bool isInitialized = 1;
+    UserInfo userInfo = 2;
+    repeated PersonalityFormat personalityList = 3;
+    repeated EgoFormat egoList = 4;
+    repeated FormationFormat formationList = 5;
+    LobbyCgFormat lobbyCG = 6;
+    repeated ItemFormat itemList = 7;
+    repeated ChanceFormat chanceList = 8;
+    BattlePassFormat battlePass = 9;
+    repeated MainChapterStateFormat mainChapterStateList = 10;
+    repeated MailFormat mailList = 11;
+    AnnouncerFormat announcer = 12;
+    repeated MembershipFormat membershipList = 13;
+    repeated GachaRecordFormat gachaList = 14;
+    repeated UnlockCodeFormat userUnlockCodeList = 15;
+    repeated EventRewardStateFormat eventRewardStateList = 16;
+    bool isUpdateUserBanner = 17;
+    bool isResetMirrorDungeon = 18;
+    repeated MissionFormat missionList = 19;
+    repeated DanteAbilityFormat danteAbilityList = 20;
+}
+
+message SynchronizedFormat {
+    int32 version = 1;
+    repeated NoticeFormat noticelist = 2;
+    repeated MailContentFormat mailContentList = 3;
+}
+
+message MailContentFormat {
+    int32 id = 1;
+    int32 version = 2;
+    string senderSprName = 3;
+    string content_KR = 4;
+    string sender_KR = 5;
+    string content_EN = 6;
+    string sender_EN = 7;
+    string content_JP = 8;
+    string sender_JP = 9;
+}
+
+message NoticeFormat {
+    int32 id = 1;
+    int32 version = 2;
+    int32 type = 3;
+    string startDate = 4;
+    string endDate = 5;
+    repeated string sprNameList = 6;
+    string title_KR = 7;
+    string content_KR = 8;
+    string title_EN = 9;
+    string content_EN = 10;
+    string title_JP = 11;
+    string content_JP = 12;
+}
+
+message ContentFormat {
+    string formatKey = 1;
+    string formatValue = 2;
+}
+
+message PriceTierFormat {
+    int32 tier = 1;
+    int32 version = 2;
+    int32 USD_cent = 3;
+    int32 KRW = 4;
+    int32 JPY = 5;
+}
+
+message EventRewardStateFormat {
+    int32 eventID = 1;
+    int32 rewardID = 2;
+    int32 count = 3;
+}
+
+message MissionFormat {
+    MISSION_CATEGORY category = 1;
+    int32 id = 2;
+    MISSION_STATE state = 3;
+    int64 initconditionvalue = 4;
+    int64 conditionvalue = 5;
+    string expiredate = 6;  // DateTime
+}
+
+message MissionConditionFormat {
+    int32 id = 1;
+    int32 value = 2;
+}
+
+message MissionConditionContextFormat {
+    // Should return a string of the type
+    // instead of the number
+    MISSION_CONDITION_TYPE type = 1;
+    int32 target1 = 2;
+    int32 target2 = 3;
+    int32 target3 = 4;
+    int32 value = 5;
+}
+
+message UserBannerDataFormat {
+    int32 id = 1;
+    string acquiretime = 2;
+    int32 value = 3;
+    int32 value2 = 4;
+}
+
+message DungeonMapNodeFormat {
+    int32 f = 1;
+    int32 s = 2;
+    int32 nid = 3;
+}
+
+message DungeonMapEgoGiftFormat {
+    int32 id = 1;
+    repeated int32 pids = 2;
+    int32 un = 3;
+    int32 ul = 4;
+}
+
+message DungeonEgoFormat {
+    int32 id = 1;
+    int32 g = 2;
+    int32 idx = 3;
+}
+
+message DungeonSaveUnitInfoFormat {
+    int32 pid = 1;
+    int32 ch = 2;
+    int32 cm = 3;
+    int32 mhos = 4;
+    int32 g = 5;
+    int32 l = 6;
+    repeated DungeonEgoFormat es = 7;
+    int32 isp = 8;
+}
+
+message DungeonCurrentInfoFormat {
+    DungeonMapNodeFormat cn = 1;
+    repeated DungeonMapEgoGiftFormat egs = 2;
+    repeated int32 pnids = 3;
+    int32 nr = 4;
+    repeated DungeonChoiceEventSaveDataFormat pce = 5;
+    repeated DungeonEgoSkillStockFormat ess = 6;
+    int32 dn = 7;
+}
+
+message DungeonStatisticsDataFormat {
+    int32 id = 1;
+    int32 gd = 2;
+    int32 rd = 3;
+}
+
+message DungeonChoiceEventSaveDataFormat {
+    repeated int32 sl = 1;
+    int32 cs = 2;
+    int32 ri = 3;
+}
+
+message DungeonEgoSkillStockFormat {
+    string t = 1;
+    int32 n = 2;
+}
+
+message StoryDungeonSaveInfoFormat {
+    int32 dungeonid = 1;
+    StoryDungeonCurrentInfoFormat currentinfo = 2;
+}
+
+message StoryDungeonCurrentInfoFormat {
+    repeated StoryDungeonSaveUnitInfoFormat dul = 1;
+    DungeonMapNodeFormat scpn = 2;
+    repeated DungeonMapEgoGiftFormat scpegl = 3;
+    repeated int32 opn = 4;
+}
+
+message StoryDungeonSaveUnitInfoFormat {
+    int32 sp = 1;
+    int32 gi = 2;
+}
+
+message UserPublicProfileFormat {
+    string public_uid = 1;
+    int32 illust_id = 2;
+    int32 illust_gacksung_level = 3;
+    int32 leftborder_id = 4;
+    int32 rightborder_id = 5;
+    int32 egobackground_id = 6;
+    int32 sentence_id = 7;
+    int32 word_id = 8;
+    repeated UserPublicBannerFormat banners = 9;
+    int32 level = 10;
+    string date = 11;
+}
+
+message UserPublicBannerFormat {
+    int32 id = 1;
+    int32 value = 2;
+    int32 value2 = 3;
+    int32 idx = 4;
+}
+
+message UserPublicProfileWithSupportersFormat {
+    repeated SupportPersonalitySlotFormat support_personalities = 1;
+}
+
+message BattlePassParameterFormat {
+    int32 enemyKillCount = 1;
+    int32 abnormalityKillCount = 2;
+    bool isUsedDailyChar = 3;
+    bool isUsedSeasonEgo = 4;
+    bool isUsedSeasonAnnouncer = 5;
+}
+
+message StageNormalReqResultFormat {
+    int32 mainchapterid = 1;
+    int32 subchapterid = 2;
+    int32 nodeid = 3;
+    int32 stageid = 4;
+    bool iswin = 5;
+    int32 turn = 6;
+    int32 formationid = 7;
+    int32 supportCharacterId = 8;
+    int32 supportPersonalityId = 9;
+    repeated int32 supportEgoIds = 10;
+    bool supportParticipate = 11;
+    BattlePassParameterFormat battlePassParameters = 12;
+    repeated AbnormalityUnlockInformationFormat abnormalityLogs = 13;
+    repeated MissionConditionContextFormat missionConditionContexts = 14;
+    int32 usedDanteAbilityCount = 15;
+}
+
+message StageDungeonReqResultFormat {
+    int32 mainchapterid = 1;
+    int32 subchapterid = 2;
+    int32 nodeid = 3;
+    int32 stageid = 4;
+}
+
+message StageStoryReqResultFormat {
+    int32 mainchapterid = 1;
+    int32 subchapterid = 2;
+    int32 nodeid = 3;
+    int32 stageid = 4;
+}
+
+message StagePersonalityInfoFormat {
+    int32 personalityid = 1;
+    int32 prevlevel = 2;
+    int32 totaladdexp = 3;
+}
+
+message MainChapterStateFormat {
+    int32 id = 1;
+    repeated SubChapterStateFormat subcss = 2;
+}
+
+message SubChapterStateFormat {
+    int32 id = 1;
+    repeated NodeStateFormat nss = 2;
+    repeated int32 rss = 3;
+}
+
+message NodeStateFormat {
+    int32 id = 1;
+    int32 ct = 2;
+    int32 cn = 3;
+    int32 dn = 4;
+}
+
+message StageNodeFormat {
+    int32 nodeid = 1;
+}
+
+message MirrorDungeonSaveInfoFormat {
+    int32 dungeonId = 1;
+    int32 idx = 2;
+    MirrorDungeonCurrentInfoFormat currentInfo = 3;
+    RandomDungeonMapFormat dungeonMap = 4;
+    repeated int32 choiceEventList = 5;
+    int32 addUserExp = 6;
+    repeated DungeonStatisticsDataFormat statistics = 7;
+    repeated int32 encounterstatistics = 8;
+    int32 isEndDungeon = 9;
+    int32 isReset = 10;
+    int32 version = 11;
+}
+
+message MirrorDungeonCurrentInfoFormat {
+    int32 eid = 1;
+    repeated MirrorDungeonSaveUnitInfoFormat dul = 2;
+    int32 sepsId = 3;
+    repeated MirrorDungeonEgoGiftPoolSetFormat seps = 4;
+    int32 sepsCreated = 5;
+    repeated RandomDungeonMapThemeFormat tfs = 6;
+    repeated ThemeFloorPool tfps = 7;
+    int32 tfpsCreated = 8;
+    repeated RandomDungeonEncounterRewardEventInfoFormat rre = 9;
+    int32 ri = 10;
+    int32 cost = 11;
+    UserMirrorDungeonShopDataFormat shop = 12;
+    repeated MirrorDungeonPrevUnitInfoFormat prevdul = 13;
+    repeated int32 preves = 14;
+    repeated int32 leveladders = 15;
+    int32 bonusChipReward = 16;
+    int32 consumedChipIn = 17;
+    int32 consumedChipOut = 18;
+    int32 fundedChip = 19;
+    string startKeyword = 20;
+}
+
+message MirrorDungeonSaveUnitInfoFormat {
+    repeated int32 upidx = 1;
+    int32 mlos = 2;
+}
+
+message MirrorDungeonPrevUnitInfoFormat {
+    int32 pid = 1;
+    repeated int32 upidx = 2;
+}
+
+message RandomDungeonMapFormat {
+    repeated RandomDungeonMapNodeFormatForMapFormat ns = 1;
+}
+
+message RandomDungeonMapThemeFormat {
+    int32 f = 1;
+    int32 tid = 2;
+    int32 tfid = 3;
+    repeated int32 egs = 4;
+}
+
+message RandomDungeonMapNodeFormatForMapFormat {
+    int32 f = 1;
+    int32 s = 2;
+    int32 nid = 3;
+    int32 e = 4;
+    int32 eid = 5;
+    repeated int32 nnids = 6;
+}
+
+message MirrorDungeonGetCharacterInfoFormat {
+    int32 pid = 1;
+    repeated DungeonEgoFormat egos = 2;
+}
+
+message RandomDungeonLevelUpPersonalityInfoFormat {
+    int32 pid = 1;
+    DungeonEgoFormat ego = 2;
+}
+
+message StoryMirrorDungeonLevelUpPersonalityInfoFormat {
+    int32 pid = 1;
+    repeated DungeonEgoFormat egos = 2;
+}
+
+message RandomDungeonEncounterRewardEventInfoFormat {
+    string rt = 1;
+    int32 se = 2;
+    int32 sh = 3;
+    repeated int32 pool = 4;
+    repeated int32 pool_v2 = 5;
+    repeated int32 pool_v3 = 6;
+}
+
+message MirrorDungeonFormationFormat {
+    int32 pervPersonalityId = 1;
+    int32 nextPersonalityId = 2;
+    repeated MirrorDungeonFormationEgoFormat egos = 3;
+}
+
+message MirrorDungeonFormationEgoFormat {
+    int32 prevEgoId = 1;
+    int32 nextEgoId = 2;
+}
+
+message MirrorDungeonStartBuffInfoFormat {
+    int32 dungeonid = 1;
+    repeated int32 bufstate = 2;
+    repeated int32 specialbufstate = 3;
+    repeated int32 disabled = 4;
+    int32 chip = 5;
+}
+
+message MirrorDungeonClearInfoFormat {
+    int32 dungeonid = 1;
+    int32 idx = 2;
+    int32 clearnumber = 3;
+    int32 defeatnumber = 4;
+}
+
+message MirrorDungeonEgoGiftPoolSetFormat {
+    int32 setId = 1;
+    string keyword = 2;
+    repeated int32 pool = 3;
+}
+
+message MirrorDungeonPersonalityRestStatusFormat {
+    int32 pid = 1;
+    int32 cnt = 2;
+}
+
+message MirrorDungeonPrevPlayRecordFormat {
+    repeated int32 pids = 1;
+    int32 epsId = 2;
+    repeated int32 prevtfids = 3;
+    repeated int32 tfids = 4;
+}
+
+message MirrorDungeonHistoryFormat {
+    int32 dungeonid = 1;
+    repeated MirrorDungeonPersonalityRestStatusFormat restStatuses = 2;
+    MirrorDungeonPrevPlayRecordFormat prevPlayRecord = 3;
+}
+
+message MirrorDungeonAcquiredChipFormat {
+    int32 clearFloorChip = 1;
+    int32 clearNodeChip = 2;
+    int32 battleWinCount = 3;
+    int32 battleWinChip = 4;
+    int32 acquiredEgoGiftChip = 5;
+    float difficultyProb = 6;
+    int32 startEgoGiftPoolSetBonusChip = 7;
+    int32 personalityRestBonusChip = 8;
+    int32 bonusChipReward = 9;
+    int32 themeBonusChip = 10;
+    int32 consumedChip = 11;
+    int32 totalChip = 12;
+}
+
+message MirrorDungeonAcquiredRewardFormat {
+    bool useWeeklyRewardChance = 1;
+    bool useWeeklyHardRewardChance = 2;
+    int32 acquiredUserExp = 3;
+    repeated Element rewardList = 4;
+}
+
+message MirrorDungeonExitRewardFormat {
+    int32 chanceConsumption = 1;
+    repeated Element rewardList = 2;
+    int32 moduleConsumption = 3;
+}
+
+message SaveData_Rail_Line2_Format {
+    repeated int32 hps = 1;
+    int32 lastWave = 2;
+    repeated int32 lastPhase = 3;
+    repeated bool isSkillUsed = 4;
+}
+
+message RailwayDungeonSaveInfoFormat {
+    int32 id = 1;
+    int32 prevclearnode = 2;
+    int32 currentnode = 3;
+    int32 lastclearnode = 4;
+    repeated RailwayUnitInfoFormat personalities = 5;
+    int32 payreward = 6;
+    int32 rewardstate = 7;
+    repeated RailwayExtraRewardStateFormat extrarewardstate = 8;
+    string firstcleardate = 9; // DateUtil
+    int32 currentclearrotation = 10;
+    int32 lastenternodeid = 11;
+    int32 lastclearrotation = 12;
+    repeated RailwayBuffSetFormat buffsets = 13;
+    int32 initseed = 14;
+    int32 currentseed = 15;
+    SaveDataForRailwayDungeon enemySaveData = 16;
+}
+
+message RailwayNodeDataFormat {
+    int32 nodeid = 1;
+    repeated RailwayEGOStockFormat egostocks = 2;
+    repeated RailwayUnitStatusFormat status = 3;
+    int32 clearturn = 4;
+    int32 playturn = 5;
+    repeated RailwayStatisticsDataFormat statistics = 6;
+    SaveDataForRailwayDungeon enemy = 7;
+    uint32 nodestate = 8;
+}
+
+message RailwayUnitInfoFormat {
+    int32 pid = 1;
+    int32 g = 2;
+    int32 l = 3;
+    repeated DungeonEgoFormat es = 4;
+    int32 sp = 5;
+    int32 gi = 6;
+}
+
+message RailwayUnitStatusFormat {
+    int32 pid = 1;
+    int32 hp = 2;
+    int32 mp = 3;
+    int32 isp = 4;
+    RailwayUnitSinFormat sin = 5;
+    repeated DungeonEgoFormat egos = 6;
+    int32 sp = 7;
+    int32 lv = 8;
+    int32 g = 9;
+    int32 gi = 10;
+}
+
+message RailwayUnitSinFormat {
+    repeated int32 sp = 1;
+    repeated int32 cs = 2;
+    int32 rs = 3;
+}
+
+message RailwayEGOStockFormat {
+    string t = 1;
+    int32 n = 2;
+}
+
+message RailwayStatisticsDataFormat {
+    int32 id = 1;
+    int32 gd = 2;
+    int32 rd = 3;
+}
+
+message RailwayDetailStatisticsDataFormat {
+    int32 collectionId = 1;
+    repeated RailwayUnitInfoFormat personalities = 2;
+    repeated RailwayStatisticsDataFormat statistics = 3;
+}
+
+message RailwayLogDataFormat {
+    int32 idx = 1;
+    repeated RailwayUnitInfoFormat personalities = 2;
+    repeated RailwayStatisticsDataFormat statistics = 3;
+    repeated RailwayDetailStatisticsDataFormat detailstatistics = 4;
+    int32 clearturn = 5;
+    repeated RailwayTurnsPerNode turnspernode = 6;
+    int32 clearrotation = 7;
+    repeated RailwayBuffSetFormat buffsets = 8;
+    string date = 9;
+    int32 deadunitnumber = 10;
+}
+
+message RailwayBuffSetFormat {
+    int32 setid = 1;
+    repeated RailwayBuffFormat buffs = 2;
+    int32 recentbuffid = 3;
+    repeated int32 currentbuffids = 4;
+}
+
+message RailwayBuffFormat {
+    int32 id = 1;
+    int32 count = 2;
+    repeated int32 targetids = 3;
+}
+
+message RailwayExtraRewardStateFormat {
+    int32 id = 1;
+    bool isRewarded = 2;
+}
+
+message RailwayBuffSetRequestFormat {
+    int32 setId = 1;
+    int32 buffId = 2;
+    int32 targetId = 3;
+}
+
+message AnnouncerFormat {
+    repeated int32 announcer_ids = 1;
+    repeated int32 cur_announcer_ids = 2;
+}
+
+message UserAuthFormat {
+    int64 uid = 1;
+    int64 public_id = 2;
+    int32 db_id = 3;
+    string auth_code = 4;
+    string last_login_date = 5;
+    string last_update_date = 6;
+    int32 data_version = 7;
+}
+
+message LinkAuthFormat {
+    int64 public_id = 1;
+    string password = 2;
+    string expiry_date = 3;
+    string details = 4;
+}
+
+message AccountInfoFormat {
+    uint64 uid = 1;
+    string google_account = 2;
+    string apple_account = 3;
+    string steam_account = 4;
+    string unlink_date = 5;
+}
+
+message BattlePassFormat {
+    bool is_limbus = 1;
+    int32 level = 2;
+    int32 exp = 3;
+    int32 today_rand_value = 4;
+    int32 ex_reward_level = 5;
+    int32 limbus_apply_level = 6;
+    repeated int32 rewards_state = 7;
+    repeated BattlePassMissionState missions_state = 8;
+    int32 special_product_state = 9;
+    int32 ex_reward_limbus_level = 10;
+}
+
+message ChanceFormat {
+    int32 id = 1;
+    int32 value = 2;
+}
+
+message DanteAbilityFormat {
+    DANTE_ABILITY_CATEGORY category = 1;
+    repeated int32 abilityids = 2;
+    int32 remaincount = 3;
+}
+
+message EgoFormat {
+    int32 ego_id = 1;
+    int32 gacksung = 2;
+    string acquire_time = 3;
+}
+
+message EgoContainIndexFormat {
+    int32 index = 1;
+    int32 ego_id = 2;
+    int32 gacksung = 3;
+    string acquire_time = 4;
+}
+
+message FormationFormat {
+    int32 id = 1;
+    repeated FormationDetailFormat formationDetails = 2;
+    repeated FormationNameElement formationNameFormat = 3;
+}
+
+message FormationDetailFormat {
+    int32 personalityId = 1;
+    repeated int32 egos = 2;
+    bool isParticipated = 3;
+    int32 participationOrder = 4;
+}
+
+message GachaRecordFormat {
+    int32 gachaId = 1;
+    int32 pityPoint = 2;
+}
+
+message ItemFormat {
+    int32 item_id = 1;
+    int32 num = 2;
+}
+
+message LobbyCgFormat {
+    int32 characterId = 1;
+    repeated LobbyCgDetailFormat lobbycgdetails = 2;
+    bool isShowProfile = 3;
+}
+
+message LobbyCgDetailFormat {
+    int32 id = 1;
+    int32 g = 2;
+}
+
+message MailFormat {
+    int32 mail_id = 1;
+    string sent_date = 2;
+    string expiry_date = 3;
+    int32 content_id = 4;
+    repeated Element attachments = 5;
+    repeated string parameters = 6;
+}
+
+message MembershipFormat {
+    int32 iap_id = 1;
+    string expiry_date = 2;
+}
+
+message PersonalityFormat {
+    int32 personality_id = 1;
+    int32 level = 2;
+    int32 exp = 3;
+    int32 gacksung = 4;
+    int32 order_id = 5;
+    int32 gacksung_illust_type = 6;
+    string acquire_time = 7;
+}
+
+message UserProfileFormat {
+    int32 illust_id = 1;
+    int32 illust_gacksung_level = 2;
+    int32 sentence_id = 3;
+    int32 word_id = 4;
+    repeated int32 banner_ids = 5;
+    repeated SupportPersonalityFormat support_personalities = 6;
+    int32 leftborder = 7;
+    int32 rightborder = 8;
+    int32 egobackground = 9;
+}
+
+message SupportPersonalityFormat {
+    int32 pid = 1;
+    int32 l = 2;
+    repeated ProfileEgoContainIndexFormat egos = 3;
+    int32 gl = 4;
+    int32 gi = 5;
+}
+
+message SupportPersonalitySlotFormat {
+    int32 idx = 1;
+    int32 pid = 2; 
+    int32 l = 3;
+    repeated ProfileEgoContainIndexFormat egos = 4;
+    int32 gl = 5;
+    int32 gi = 6;
+}
+
+message ProfileEgoFormat {
+    int32 id = 1;
+    int32 g = 2;
+}
+
+message ProfileEgoContainIndexFormat {
+    int32 idx = 1;
+    int32 id = 2;
+    int32 g = 3;
+}
+
+message AbnormalityKillLogFormat {
+    int32 id = 1;
+    int32 number = 2;
+}
+
+message StoryMirrorDungeonSaveInfoFormat {
+    int32 dungeonid = 1;
+    StoryMirrorDungeonCurrentInfoFormat currentinfo = 2;
+    RandomDungeonMapFormat map = 3;
+    repeated int32 choiceeventlist = 4;
+    repeated DungeonStatisticsDataFormat statistics = 5;
+}
+
+message StoryMirrorDungeonCurrentInfoFormat {
+    DungeonMapNodeFormat cn = 1;
+    repeated DungeonMapEgoGiftFormat egs = 2;
+    repeated int32 pnids = 3;
+    int32 nr = 4;
+    repeated DungeonChoiceEventSaveDataFormat pce = 5;
+    repeated DungeonEgoSkillStockFormat ess = 6;
+    int32 eid = 7;
+    repeated StoryMirrorDungeonSaveUnitInfoFormat dul = 8;
+    repeated RandomDungeonEncounterRewardEventInfoFormat rre = 9;
+    UserMirrorDungeonShopDataFormat shop = 10;
+    int32 cost = 11;
+    repeated MirrorDungeonPrevUnitInfoFormat prevdul = 12;
+    repeated int32 preves = 13;
+    repeated MirrorDungeonEgoGiftPoolSetFormat seps = 14;
+    int32 sepsCreated = 15;
+}
+
+message StoryMirrorDungeonSaveUnitInfoFormat {
+    int32 sp = 1;
+    repeated int32 upidx = 2;
+    int32 mlos = 3;
+}
+
+message StoryMirrorDungeonGetCharacterInfoFormat {
+    int32 pid = 1;
+    repeated DungeonEgoFormat egos = 2;
+    int32 sp = 3;
+}
+
+message StoryMirrorDungeonGetCharacterInfoContainGacksungFormat {
+    int32 g = 1;
+    int32 cl = 2;
+    int32 pid = 3;
+    repeated DungeonEgoFormat egos = 4;
+    int32 sp = 5;
+}
+
+message UserTheaterInfoFormat {
+    repeated string rewardedIDList = 1;
+}
+
+message UnlockCodeFormat {
+    int32 unlockcode = 1;
+    string expireDate = 2;
+}
+
+message Element {
+    string type = 1;
+    ELEMENT_TYPE _type = 2;
+    int32 id = 3;
+    int32 num = 4;
+    repeated string tags = 5;
+}
+
+message UserInfo {
+    int64 uid = 1;
+    int32 level = 2;
+    int32 exp = 3;
+    int32 stamina = 4;
+    string last_stamina_recover = 5;
+}
+
+enum MISSION_CATEGORY {
+    MISSION_CATEGORY_NONE = 0;
+    EVENT_NEWYEAR_2024_NORMAL = 1;
+    EVENT_NEWYEAR_2024_HARD = 2;
+    EVENT_NEWYEAR_2024_COMMON = 3;
+    EVENT_WALPU3_NORMAL = 4;
+    EVENT_WALPU3_HARD = 5;
+    EVENT_WALPU3_COMMON = 6;
+    EVENT_WALPU4_NORMAL = 7;
+    EVENT_WALPU4_HARD = 8;
+    EVENT_WALPU4_COMMON = 9;
+    NEWBIE = 90000001;
+    RETURN = 90000101;
+}
+
+message CreditsForThisProto {
+    string yuvlian = 1;
+}
+
+enum MISSION_CONDITION_TYPE {
+    MISSION_CONDITION_TYPE_NONE = 0;
+    KILL_ENEMY_ONCE_BATTLE = 1;
+    CLEAR_ALIVE_ALL = 2;
+    CLEAR_EQUANNIMITY_ALL = 3;
+    KILL_ENEMY_ONCE_ATTACK_SKILL = 4;
+    TL_DAMAGE_ATTACK_SKILL = 5;
+    MISSION_ALL_CLEAR = 6;
+    KILL_ENEMY_COUNT_BY_ATTACK_SKILL = 7;
+    CLEAR = 8;
+    CLEAR_WITHIN_TURN = 9;
+    CLEAR_WITHOUT_KILLED_ENEMY_BY_ENEMY = 10;
+    ENEMY_KILLED_BY_ENEMY = 11;
+    ENEMY_KILLED_BY_ENEMY_WITHIN_ONE_TURN = 12;
+    ENEMY_NEGATIVE_SINBUFFED = 13;
+    ENEMY_KILLED_BY_NEGAIVE_SINBUFF = 14;
+    ENEMY_KILLED_BY_PLAYER_WITH_BUFF = 15;
+    ENEMY_SKILL_NOTUSED = 16;
+    ENEMY_DAMAGED_COUNT_BY_NEGATIVE_SINBUFF = 17;
+    ENEMY_KILLED_BY_ONE_SKILL_HP_RATIO_80 = 18;
+    ENEMY_NEGATIVE_BUFFED_ONE_TURN = 19;
+    ENEMY_MULTIKILLED_ONE_TURN = 20;
+    ENEMY_KILLED_BY_PARTICIPANT_ORDER = 21;
+    ENEMY_KILLED_ALL = 22;
+    USE_PERSONALITY_ATKTYPE = 10000001;
+    USE_PERSONALITY_SKILL = 10000002;
+    USE_PERSONALITY_DEFENSE_SKILL = 10000003;
+    USE_EGO_SKILL = 10000004;
+    USE_FRIEND_SUPPORT = 10000005;
+    CHECK_BATTLE_PASS = 10000006;
+    CHECK_PASSIVE_SKILL = 10000007;
+    STAGE_CLEAR = 10000008;
+    ACQUIRE_STAGE_PROGRESS_REWARD = 10000009;
+    PERSONALITY_LEVEL_UP = 10000010;
+    PERSONALITY_GACKSUNG = 10000011;
+    EGO_GACKSUNG = 10000012;
+    USER_LEVEL_UP = 10000013;
+    ACQUIRE_PERSONALITY = 10000014;
+    ACQUIRE_EGO = 10000015;
+    GACHA = 10000016;
+    BATTLE_PASS_MISSION_CLEAR = 10000017;
+    PURCHASE_ENKEPHALINE_MODULE = 10000018;
+    CONSUME_ENKEPHALINE = 10000019;
+    UPDATE_USER_PROFILE = 10000020;
+    LUXCAVATION_DUNGEON_CLEAR = 10000021;
+    LUXCAVATION_DUNGEON_SKIP = 10000022;
+    EXP_DUNGEON_CLEAR = 10000023;
+    EXP_DUNGEON_SKIP = 10000024;
+    THREAD_DUNGEON_CLEAR = 10000025;
+    THREAD_DUNGEON_SKIP = 10000026;
+    MIRROR_DUNGEON_ENTER = 10000027;
+    MIRROR_DUNGEON_CLEAR_NODE = 10000028;
+    MIRROR_DUNGEON_CLEAR = 10000029;
+    RAILWAY_DUNGEON_ENTER = 10000030;
+    RAILWAY_DUNGEON_CLEAR_NODE = 10000031;
+    RAILWAY_DUNGEON_CLEAR = 10000032;
+    USE_ITEM = 10000033;
+    UPDATE_FORMATION = 10000034;
+    EXCHANGE_TWINE = 10000035;
+    VENDING_MACHINE = 10000036;
+    NEW_USER = 10000037;
+    RETURN_USER = 10000038;
+    BATTLE_PASS_LEVEL_UP = 10000039;
+}
+
+enum MISSION_STATE {
+    MISSION_STATE_NONE = 0;
+    OPENED = 1;
+    ACHIEVED = 2;
+    REWARDED = 3;
+}
+
+message ThemeFloorPool {
+    int32 tfid = 1;
+    repeated int32 egs = 2;
+    repeated int32 upegs = 3;
+}
+
+message SaveDataForRailwayDungeon {
+    int32 lastWave = 1;
+    int32 lastTurn = 2;
+    repeated SaveDataForEach abnoSaveDataList = 3;
+}
+
+message SaveDataForEach {
+    int32 abnormalityHp = 1;
+    int32 abnormalityMaxHp = 2;
+    int32 abnormalityMp = 3;
+    repeated SaveDataForPart partsData = 4;
+    int32 lastPhase = 5;
+    repeated bool checkList = 6;
+}
+
+message SaveDataForPart {
+    int32 partHp = 1;
+    repeated SaveDataForBS bs = 2;
+    repeated SaveDataForBS originBs = 3;
+}
+
+message SaveDataForBS {
+    int32 section = 1;
+    bool isActive = 2;
+}
+
+message RailwayTurnsPerNode {
+    int32 nid = 1;
+    int32 turn = 2;
+}
+
+message BattlePassMissionState {
+    int32 id = 1;
+    int32 count = 2;
+    int32 state = 3;
+}
+
+enum DANTE_ABILITY_CATEGORY {
+    DEFAULT = 0;
+    RAILWAY_DUNGEON = 1;
+}
+
+message FormationNameElement {
+    int32 k = 1;
+    int32 v = 2;
+}
+
+enum ELEMENT_TYPE {
+    // ELEMENT_NONE = -1;
+    ITEM = 0;
+    EXP = 1;
+    CHARACTER = 2;
+    PERSONALITY = 3;
+    EGO = 4;
+    STAMINA = 5;
+    BATTLEPASS_POINT = 6;
+    ELEMENT_VENDING_MACHINE = 7;
+    ANNOUNCER = 8;
+    EGO_GIFT = 9;
+    ELEMENT_GACHA = 10;
+    USERBANNER = 11;
+    VENDING_MACHINE_PERSONALITY = 12;
+    VENDING_MACHINE_CHARACTER = 13;
+    SEASONAL_R_BOX = 14;
+    SEASONAL_O_BOX = 15;
+    SEASONAL_PIECE = 16;
+    SEASONAL_GLOBAL_GROWTH_PIECE = 17;
+    EVENT_ITEM = 18;
+    USER_TICKET_DECO_LEFT = 19;
+    USER_TICKET_DECO_RIGHT = 20;
+    USER_TICKET_DECO_EGOBG = 21;
+    USER_TICKET_DECO_FOR_UI = 22;
+    MIRRORDUNGEON_COST = 23;
+    UNLOCK_CODE = 24;
+    CHANCE = 25;
+}
+
+message ServerInfo {
+    string version = 1;
+}
+
+message GachaLog {
+    int32 gachaId = 1;
+    string gachaDate = 2;
+    int32 paymentId = 3;
+    repeated ItemFormat payments = 4;
+    repeated GachaLogDetail gachaLogDetails = 5;
+}
+
+message GachaLogDetail {
+    string type = 1;
+    ELEMENT_TYPE _type = 2;
+    int32 id = 3;
+    Element ex = 4;
+    Element origin = 5;
+}
+
+message LinkDetails {
+    int32 level = 1;
+    int32 lunacy = 2;
+    int32 enkBox = 3;
+    int32 enkModule = 4;
+}
+
+enum LinkAuthState {
+    OK = 0;
+    INVALID = 1;
+    GUEST_USER = 2;
+    TRY_COUNT = 3;
+    ACCOUNT = 4;
+}
+
+message MailLog {
+    int32 maillog_id = 1;
+    string sent_date = 2; // DateUtil
+    int32 content_id = 3;
+    repeated Element attachments = 4;
+    string unsealed_date = 5; // DateUtil
+    repeated string parameters = 6;
+}
+
+message TermsOfUseState {
+    int32 version = 1;
+    int32 state = 2; // TERMSOFUSE_STATE
+}
+
+enum TERMSOFUSE_STATE {
+    TERMSOFUSE_STATE_NONE = 0;
+    AGREE = 1;
+    DISAGREE = 2;
+}
+
+message ServerUserAuth {
+    int64 uid = 1;
+    int32 dbid = 2;
+    string authCode = 3;
+    string version = 4;
+    int32 synchronousDataVersion = 5;
+}
+
+enum MIRRORDUNGEON_EGOGIFT_KEYWORD {
+    MIRRORDUNGEON_EGOGIFT_KEYWORD_None = 0;
+    Combustion = 1; // Burn
+    Laceration = 2; // Bleed
+    Vibration = 3; // Tremor
+    Burst = 4; // Rupture
+    Sinking = 5;
+    Breath = 6; // Poise
+    Charge = 7;
+    Slash = 8;
+    Penetrate = 9; // Stab
+    Hit = 10; // Blunt
+    Random = 11;
+}
+
+enum MIRRORDUNGEON_EGOGIFT_TAG {
+    // MIRROR_DUNGEON_EGOGIFT_TAG_NONE = -1;
+    NORMAL = 0;
+    START = 1;
+    FLOORBOSS = 2;
+    TIER_1 = 3;
+    TIER_2 = 4;
+    TIER_3 = 5;
+    TIER_4 = 6;
+    TIER_5 = 7;
+    NO_SALE = 8;
+    EXTRA = 9;
+    EXTRA_TIER1 = 10;
+    EXTRA_TIER2 = 11;
+    EXTRA_TIER3 = 12;
+    EXTRA_TIER4 = 13;
+}
+
+enum ATTRIBUTE_TYPE {
+    CRIMSON = 0;
+    SCARLET = 1;
+    AMBER = 2;
+    SHAMROCK = 3;
+    AZURE = 4;
+    INDIGO = 5;
+    VIOLET = 6;
+    WHITE = 7;
+    BLACK = 8;
+    SPECIAL_RED = 9;
+    SPECIAL_PALE = 10;
+    NEUTRAL = 11;
+    ATTRIBUTE_TYPE_NONE = 12;
+}
+
+enum ENCOUNTER {
+    ENCOUNTER_START = 0;
+    BATTLE = 1;
+    HARD_BATTLE = 2;
+    EVENT = 3;
+    SAVE = 4;
+    AB_BATTLE = 5;
+    BOSS = 6;
+    EVENT_BATTLE = 7;
+    EVENT_HARD_BATTLE = 8;
+    EVENT_AB_BATTLE = 9;
+    MIRROR_SHOP = 10;
+    MIRROR_SELECT_EVENT = 11;
+    STAIRS = 12;
+    STORY = 13;
+}

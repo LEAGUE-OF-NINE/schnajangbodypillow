@@ -1,0 +1,887 @@
+syntax = "proto3";
+
+// Actual names: ReqPacket_<MESSAGE-NAME>
+// And some may have "Command" after MESSAGE-NAME.
+
+// If the definition doesn't have Req at the front,
+// Check this imported file instead.
+import "schnajangbodypillow/formats.proto";
+
+message HttpRequestFormat {
+    ServerUserAuth userAuth = 1;
+    AnyType parameters = 2;
+
+    message AnyType {
+        // parameters is an extension of HttpRequestFormat.
+        // it can be any of the messages below.
+
+        // I'd use oneofs but we have to remember,
+        // the game doesn't actually use any protobuf.
+        
+        // We're just using protobuf to generate classes
+        // to (de)serialize jsons.
+    }
+}
+
+message ReqNULL {}
+
+message ReqAcquireHellsChickenReward {
+    int32 rewardId = 1;
+}
+
+message ReqChangeCurrentAnnouncer {
+    repeated int32 announcerIds = 1;
+}
+
+message ReqAcquireAttendanceReward {
+    int32 partid = 1;
+    int32 id = 2;
+}
+
+message ReqBattleLog {
+    string type = 1;
+    string uuid = 2;
+    int32 platform = 3;
+    bytes log = 4;
+}
+
+message ReqBattlePassMissionReward {
+    int32 missionType = 1;
+    int32 missionid = 2;
+}
+
+message ReqBattlePassReward {
+    int32 level = 1;
+}
+
+message ReqPurchaseBattlePassLevel {
+    int32 level = 1;
+}
+
+message ReqUseCoupon {
+    string code = 1;
+}
+
+message ReqEnterExpDungeon {
+    int32 dungeonid = 1;
+}
+
+message ReqExitExpDungeon {
+    int32 formationId = 1;
+    int32 isWin = 2;
+    int32 supportCharacterId = 3;
+    bool supportParticipate = 4;
+    BattlePassParameterFormat battlePassParameters = 5;
+    int32 usedDanteAbilityCount = 6;
+}
+
+message ReqSkipExpDungeon {
+    int32 dungeonid = 1;
+}
+
+message ReqEnterThreadDungeon {
+    int32 dungeonid = 1;
+    int32 level = 2;
+    repeated int32 abnormalityids = 3;
+}
+
+message ReqExitThreadDungeon {
+    int32 isWin = 1;
+    BattlePassParameterFormat battlePassParameters = 2;
+    repeated AbnormalityUnlockInformationFormat abnormalityLogs = 3;
+    int32 usedDanteAbilityCount = 4;
+}
+
+message ReqSkipThreadDungeon {
+    int32 dungeonid = 1;
+    int32 dungeonlevel = 2;
+}
+
+message ReqAcquireDailyLoginReward {
+    int32 weekid = 1;
+    int32 id = 2;
+}
+
+message ReqGetStageProgressRateRewardCommand {
+    int32 mainchapterid = 1;
+    int32 subchapterid = 2;
+    int32 rewardType = 3;
+}
+
+message ReqEnterStageBattleCommand {
+    int32 mainchapterid = 1;
+    int32 subchapterid = 2;
+    int32 nodeid = 3;
+    int32 stageid = 4;
+    repeated int32 abnormalityids = 5;
+}
+
+message ReqExitStageBattleCommand {
+    int32 mainchapterid = 1;
+    int32 subchapterid = 2;
+    int32 nodeid = 3;
+    int32 stageid = 4;
+    bool iswin = 5;
+    int32 turn = 6;
+    int32 formationid = 7;
+    BattlePassParameterFormat battlePassParameters = 8;
+    int32 supportCharacterId = 9;
+    int32 supportPersonalityId = 10;
+    repeated int32 supportEgoIds = 11;
+    bool supportParticipate = 12;
+    repeated AbnormalityUnlockInformationFormat abnormalityLogs = 13;
+    repeated MissionConditionContextFormat missionConditionContexts = 14;
+    int32 usedDanteAbilityCount = 15;
+}
+
+message ReqGetDungeonSaveInfoAll {
+    int32 railwayDungeonId = 1;
+}
+
+message ReqEnterStoryDungeon {
+    int32 mainchapterid = 1;
+    int32 subchapterid = 2;
+    int32 nodeid = 3;
+    int32 stageid = 4;
+    repeated StoryDungeonSaveUnitInfoFormat personalities = 5;
+}
+
+message ReqReEnterStoryDungeonCommand {
+    int32 stageid = 1;
+}
+
+message ReqExitStoryDungeonCommand {
+    int32 mainchapterid = 1;
+    int32 subchapterid = 2;
+    int32 nodeid = 3;
+    int32 stageid = 4;
+}
+
+message ReqEnterStoryDungeonMapNodeCommand {
+    int32 floornumber = 1;
+    int32 sectornumber = 2;
+    int32 nodeid = 3;
+    repeated int32 abnormalityids = 4;
+    repeated int32 participatedPIds = 5;
+}
+
+message ReqUpdateStoryDungeonMapNodeCommand {
+    DungeonChoiceEventSaveDataFormat choiceEventData = 1;
+    repeated StoryDungeonSaveUnitInfoFormat dungeonUnitList = 2;
+    repeated DungeonMapEgoGiftFormat updatedEgoGifts = 3;
+}
+
+message ReqEnterStoryDungeonMapNodeBattleAfterChoice {
+    repeated StoryDungeonSaveUnitInfoFormat dungeonUnitList = 1;
+    repeated int32 participatedPids = 2;
+    repeated int32 abnormalityids = 3;
+}
+
+message ReqExitStoryDungeonMapNodeCommand {
+    uint32 noderesult = 1;
+    DungeonChoiceEventSaveDataFormat choiceEventData = 2;
+    repeated StoryDungeonSaveUnitInfoFormat dungeonunitlist = 3;
+    BattlePassParameterFormat battlePassParameters = 4;
+    repeated AbnormalityUnlockInformationFormat abnormalityLogs = 5;
+    int32 openedNode = 6;
+    int32 isupdatedEgoSkillStock = 7;
+    repeated DungeonEgoSkillStockFormat egoSkillStockList = 8;
+    repeated DungeonMapEgoGiftFormat updatedEgoGifts = 9;
+    repeated DungeonStatisticsDataFormat statistics = 10;
+    int32 usedDanteAbilityCount = 11;
+}
+
+message ReqUpdateStoryDungeonUnits {
+    repeated StoryDungeonSaveUnitInfoFormat dungeonunitlist = 1;
+}
+
+message ReqExitStoryCommand {
+    int32 mainchapterid = 1;
+    int32 subchapterid = 2;
+    int32 nodeid = 3;
+    int32 stageid = 4;
+}
+
+message ReqGetAbnormalityLogData {
+    repeated int32 abnormalityIds = 1;
+}
+
+message ReqUpdateAbnormalityLogData {
+    BattlePassParameterFormat battlePassParameters = 1;
+    repeated AbnormalityUnlockInformationFormat abnormalityLogs = 2;
+}
+
+message ReqGetStoryDungeonNodeRecord {
+    int32 dungeonid = 1;
+}
+
+message ReqClaimEventRewardCommand {
+    int32 eventId = 1;
+    int32 eventRewardId = 2;
+    int32 count = 3;
+}
+
+message ReqClaimEventReward_ALLCommand {
+    int32 eventId = 1;
+    int32 count = 2;
+}
+
+message ReqPlayGacha {
+    int32 gachaId = 1;
+    int32 paymentId = 2;
+}
+
+message ReqUseGachaPityPoint {
+    int32 gachaId = 1;
+    int32 targetIdx = 2;
+}
+
+message ReqPurchase {
+    string productId = 1;
+    string receipt = 2;
+    int32 platform = 3;
+}
+
+message ReqInitPurchase {
+    string productId = 1;
+}
+
+message ReqInitPurchaseAsSteam {
+    string productId = 1;
+    string steamId = 2;
+    string language = 3;
+    string productDesc = 4;
+}
+
+message ReqFinalizePurchaseAsSteam {
+    string orderId = 1;
+}
+
+message ReqGetSteamWalletCurrency {
+    string steamId = 1;
+}
+
+message ReqPurchaseIngameProduct {
+    int32 igProductId = 1;
+}
+
+message ReqUseItem {
+    int32 itemId = 1;
+    int32 usage = 2;
+    int32 targetIdx = 3;
+    Element target = 4;
+}
+
+message ReqPurchaseEnkephalinModule {
+    int32 num = 1;
+}
+
+message ReqPurchaseEnkephalin {
+    int32 num = 1;
+}
+
+message ReqPersonalityGacksung {
+    int32 personalityId = 1;
+}
+
+message ReqSetPersonalityGacksungIllust {
+    int32 personalityId = 1;
+    int32 type = 2;
+}
+
+message ReqEgoGacksung {
+    int32 egoId = 1;
+}
+
+message ReqUsePersonalityExpItem {
+    int32 targetPersonalityId = 1;
+    repeated ItemFormat items = 2;
+}
+
+message ReqUseEgoGacksungItem {
+    int32 targetEgoId = 1;
+    ItemFormat usingItem = 2;
+}
+
+message ReqPersonalityGacksungWithItems {
+    int32 personalityId = 1;
+    repeated ItemFormat usingPieces = 2;
+}
+
+message ReqEgoGacksungWithItems {
+    int32 egoId = 1;
+    repeated ItemFormat usingPieces = 2;
+}
+
+// Just keeping this here for parity.
+// Use ReqNULL instead.
+message ReqLoadUserDataAll {}
+
+message ReqLobbyCgCommand {
+    LobbyCgFormat lobbyCg = 1;
+}
+
+message ReqSignInAsGuest {
+    int64 guestId = 1;
+    string authToken = 2;
+    string version = 3;
+    string deviceModel = 4;
+}
+
+message ReqSignInAsNewGuest {
+    string deviceModel = 1;
+}
+
+message ReqSignInAsGoogle {
+    string googleToken = 1;
+    string version = 2;
+    string deviceModel = 3;
+}
+
+message ReqLinkWithGoogle {
+    string googleToken = 1;
+    string version = 2;
+}
+
+message ReqSignInAsApple {
+    string appleToken = 1;
+    string version = 2;
+    string deviceModel = 3;
+}
+
+message ReqLinkWithApple {
+    string appleToken = 1;
+    string version = 2;
+}
+
+message ReqSignInAsSteam {
+    string steamToken = 1;
+    string version = 2;
+    string deviceModel = 3;
+}
+
+message ReqRefreshLinkAuth {
+    string details = 1;
+}
+
+message ReqGetInfoOfLinkWith {
+    string targetPublicId = 1;
+    string password = 2;
+}
+
+message ReqLinkWithAnother {
+    string targetPublicId = 1;
+    string password = 2;
+    bool mainIsTarget = 3;
+}
+
+message ReqUnLinkWithAnother {
+    AccountInfoFormat accountInfo = 1;
+    bool isUnlinkGoogle = 2;
+    bool isUnlinkApple = 3;
+    bool isUnlinkSteam = 4;
+    string accountType = 5;
+}
+
+message ReqUnsealMails {
+    repeated int32 mailIds = 1;
+}
+
+message ReqReportSpeedHack {
+    string detectedDate = 1;
+    string scene = 2;
+}
+
+message ReqReportModifiedHashCatalog {
+    string platform = 1;
+    string hashvalue = 2;
+}
+
+message ReqSaveMiniStoryWeek {
+    int32 weekId = 1;
+}
+
+message ReqCompleteMinistory {
+    string storyId = 1;
+}
+
+message ReqMirrorDungeonCommon {
+    uint32 isOrigin = 1;
+}
+
+message ReqEnterMirrorDungeonCommand {
+    uint32 isOrigin = 1;
+    int32 dungeonid = 2;
+    int32 idx = 3;
+}
+
+message ReqReEnterMirrorDungeonCommand {
+    uint32 isOrigin = 1;
+    int32 dungeonid = 2;
+    int32 idx = 3;
+}
+
+message ReqUpdateMirrorDungeonCommand {
+    uint32 isOrigin = 1;
+    repeated MirrorDungeonGetCharacterInfoFormat characterInfos = 2;
+    repeated MirrorDungeonFormationFormat formation = 3;
+}
+
+message ReqSelectFormationAndCreateThemePoolMirrorDungeonCommand {
+    uint32 isOrigin = 1;
+    repeated MirrorDungeonGetCharacterInfoFormat characterInfos = 2;
+    repeated MirrorDungeonFormationFormat formation = 3;
+}
+
+message ReqSelectThemeFloorMirrorDungeonCommand {
+    int32 selectedThemeFloorId = 1;
+}
+
+message ReqAcquireMirrorDungeonLastReward {
+    uint32 isOrigin = 1;
+    uint32 useEnkephalinModule = 2;
+    uint32 useHardBonus = 3;
+    uint32 useWeeklyBonus = 4;
+}
+
+message ReqEnterMirrorDungeonMapNodeCommand {
+    uint32 isOrigin = 1;
+    DungeonMapNodeFormat currentNode = 2;
+    repeated int32 abnormalityIds = 3;
+    repeated int32 participatedPIds = 4;
+}
+
+message ReqUpdateMirrorDungeonMapNodeCommand {
+    uint32 isOrigin = 1;
+    DungeonMapNodeFormat currentNode = 2;
+    DungeonChoiceEventSaveDataFormat choiceEventData = 3;
+    repeated MirrorDungeonSaveUnitInfoFormat dungeonUnitList = 4;
+    repeated DungeonMapEgoGiftFormat updatedEgoGifts = 5;
+}
+
+message ReqEnterMirrorDungeonMapNodeBattleAfterChoice {
+    uint32 isOrigin = 1;
+    repeated int32 participatedPids = 2;
+    repeated int32 abnormalityIds = 3;
+    repeated MirrorDungeonSaveUnitInfoFormat dungeonUnitList = 4;
+}
+
+message ReqExitMirrorDungeonMapNodeCommand {
+    uint32 isOrigin = 1;
+    DungeonMapNodeFormat currentNode = 2;
+    repeated MirrorDungeonSaveUnitInfoFormat dungeonUnitList = 3;
+    int32 nodeResult = 4;
+    DungeonChoiceEventSaveDataFormat choiceEventData = 5;
+    BattlePassParameterFormat battlePassParameters = 6;
+    repeated AbnormalityUnlockInformationFormat abnormalityLogs = 7;
+    int32 isUpdatedEgoSkillStock = 8;
+    repeated DungeonEgoSkillStockFormat egoSkillStockList = 9;
+    repeated DungeonMapEgoGiftFormat updatedEgoGifts = 10;
+    repeated DungeonStatisticsDataFormat statistics = 11;
+    int32 usedDanteAbilityCount = 12;
+    int32 battleStatus = 13;
+}
+
+message ReqUpdateMirrorDungeonUnits {
+    uint32 isOrigin = 1;
+    repeated MirrorDungeonSaveUnitInfoFormat dungeonUnitList = 2;
+}
+
+message ReqAcquireRewardEgoGiftsMirrorDungeonCommand {
+    uint32 isOrigin = 1;
+    repeated int32 selectIndexList = 2;
+}
+
+message ReqAcquireRewardEgoGiftsWithEnemyBufMirrorDungeonCommand {
+    uint32 isOrigin = 1;
+    repeated int32 selectIndexList = 2;
+}
+
+message ReqAcquireCharacterEventDataMirrorDungeonCommand {
+    uint32 isOrigin = 1;
+    repeated MirrorDungeonGetCharacterInfoFormat acquirePersonalities = 2;
+}
+
+message ReqPersonalityLevelUpEventMirrorDungeonCommand {
+    uint32 isOrigin = 1;
+    RandomDungeonLevelUpPersonalityInfoFormat levelUpPersonalityFormat = 2;
+}
+
+message ReqAcquireMirrorDungeonBattleRewardCommand {
+    uint32 isOrigin = 1;
+    repeated int32 selectIndexList = 2;
+}
+
+message ReqUnLockMirrorDungeonEgoGiftCommand {
+    repeated int32 egoGiftIds = 1;
+}
+
+message ReqSendMirrorDungeonLogErrorCommand {
+    int32 type = 1;
+}
+
+message ReqSendMirrorDungeonIndex {
+    int32 index = 1;
+}
+
+message ReqSendMirrorDungeonId {
+    int32 id = 1;
+}
+
+message ReqPurchaseHealMirrorDungeon {
+    int32 idx = 1;
+    int32 pid = 2;
+}
+
+message ReqPurchaseFormationMirrorDungeon {
+    repeated MirrorDungeonFormationFormat formation = 1;
+}
+
+message ReqPurchaseUpgradePersonalityMirrorDungeon {
+    int32 idx = 1;
+}
+
+message ReqPurchaseEgoGiftMirrorDungeon {
+    int32 idx = 1;
+}
+
+message ReqSellEgoGift {
+    int32 id = 1;
+}
+
+message ReqRefreshShopEgoGiftsMirrorDungeonCommand {
+    uint32 isOrigin = 1;
+    bool isPaidWithChip = 2;
+    string keyword = 3; // MIRRORDUNGEON_EGOGIFT_KEYWORD 
+}
+
+message ReqGetStartBuffFInfoMirrorDungeon {
+    int32 dungeonid = 1;
+}
+
+message ReqPurchaseStartBuffMirrorDungeon {
+    int32 dungeonid = 1;
+    repeated int32 buffids = 2;
+}
+
+message ReqEnableSpecialStartBuffMirrorDungeon {
+    int32 dungeonid = 1;
+    repeated int32 buffids = 2;
+}
+
+message ReqDisableStartBuffMirrorDungeon {
+    int32 dungeonid = 1;
+    repeated int32 buffids = 2;
+}
+
+message ReqRemoveMirrorDungeonEgoGift {
+    int32 egogiftId = 1;
+}
+
+message ReqGetMirrorDungeonPreset {
+    int32 dungeonid = 1;
+    int32 idx = 2;
+}
+
+// Keeping this for parity.
+// Use ReqNULL instead.
+message ReqGetMirrorDungeonRewardChip {}
+
+message ReqSelectMirrorDungeonRandomPickFormation {
+    int32 dungeonid = 1;
+    int32 idx = 2;
+}
+
+message ReqAcquireStartEgoGiftsMirrorDungeonCommand {
+    uint32 isOrigin = 1;
+    int32 selectedSetId = 2;
+    repeated int32 selectedEgoGiftIds = 3;
+}
+
+message ReqRefreshStartEgoGiftsMirrorDungeonCommand {
+    uint32 isOrigin = 1;
+}
+
+message ReqUpgradeEgoGiftMirrorDungeonCommand {
+    uint32 isOrigin = 1;
+    int32 egoGiftId = 2;
+}
+
+message ReqCombineEgoGiftMirrorDungeonCommand {
+    uint32 isOrigin = 1;
+    repeated int32 materialEgoGiftIds = 2;
+    string keyword = 3; // MIRRORDUNGEON_EGOGIFT_KEYWORD 
+}
+
+message ReqAcquireMirrorDungeonExitReward {
+    bool useEnkephalinModule = 1;
+    int32 chanceConsumption = 2;
+}
+
+message ReqAcquireMissionRewardsCommand {
+    repeated int32 missionIds = 1;
+}
+
+message ReqReportError {
+    string errorCode = 1;
+    string url = 2;
+    string requestJson = 3;
+    string message = 4;
+}
+
+message ReqGetTermsOfUseStateAll {
+    int64 uid = 1;
+}
+
+message ReqUpdateTermsOfUseState {
+    int64 uid = 1;
+    int32 termsVersion = 2;
+    int32 state = 3;
+}
+
+message ReqCompleteTheaterStory {
+    string storyId = 1;
+}
+
+message ReqUpdateFormationCommand {
+    FormationFormat formation = 1;
+}
+
+message ReqFindFriend {
+    string publicUID = 1;
+}
+
+message ReqSendFriendRequest {
+    string receiverPublicUID = 1;
+}
+
+message ReqAcceptReceivedFriendRequest {
+    string senderPublicUID = 1;
+}
+
+message ReqRejectReceivedFriendRequest {
+    string senderPublicUID = 1;
+}
+
+message ReqCancelSentFriendRequest {
+    string receivedPublicUID = 1;
+}
+
+message ReqDeleteFriend {
+    string deletedPublicUID = 1;
+}
+
+message ReqGetFriendSupportPersonalities {
+    string publicUID = 1;
+}
+
+message ReqGetFriendSupportPersonalitiesByCharacterId {
+    int32 characterid = 1;
+}
+
+message ReqUpdateUserProfile {
+    int32 illustId = 1;
+    int32 illustGacksungLevel = 2;
+    int32 sentenceId = 3;
+    int32 wordId = 4;
+    repeated UserPublicBannerFormat banners = 5;
+    repeated SupportPersonalitySlotFormat supportPersonalities = 6;
+}
+
+message ReqUpdateProfileTicketDeco {
+    int32 leftBorderId = 1;
+    int32 rightBorderId = 2;
+    int32 egoBackgroundId = 3;
+}
+
+message ReqPlayVendingMachine {
+    int32 vendingMachineId = 1;
+    string targetType = 2;
+    int32 targetId = 3;
+    repeated int32 coupons = 4;
+    bool isPaidByLunacy = 5;
+}
+
+message ReqExchangeTwine {
+    repeated ItemFormat paidPieces = 1;
+}
+
+// Keeping this here for parity.
+// Just use ReqNULL.
+message ReqStoryMirrorDungeonCommon {}
+
+message ReqAcquireEgoGiftEventStoryMirrorDungeonCommand {
+    repeated int32 selectIndexList = 1;
+}
+
+message ReqAcquireCharacterEventDataStoryMirrorDungeonCommand {
+    repeated StoryMirrorDungeonGetCharacterInfoFormat acquirePersonalities = 1;
+}
+
+message ReqPersonalityLevelUpEventStoryMirrorDungeonCommand {
+    StoryMirrorDungeonLevelUpPersonalityInfoFormat levelUpPersonalityFormat = 1;
+}
+
+message ReqEnterStoryMirrorDungeonCommand {
+    int32 dungeonid = 1;
+    int32 idx = 2;
+}
+
+message ReqReEnterStoryMirrorDungeonCommand {
+    int32 dungeonid = 1;
+}
+
+message ReqUpdateStoryMirrorDungeonCommand {
+    repeated MirrorDungeonFormationFormat formation = 1;
+}
+
+message ReqEnterStoryMirrorDungeonMapNodeCommand {
+    DungeonMapNodeFormat currentnode = 1;
+    repeated int32 abnormalityids = 2;
+    repeated int32 participatedPIds = 3;
+}
+
+message ReqUpdateStoryMirrorDungeonMapNodeCommand {
+    DungeonMapNodeFormat currentnode = 1;
+    DungeonChoiceEventSaveDataFormat choiceEventData = 2;
+    repeated StoryMirrorDungeonSaveUnitInfoFormat dungeonUnitList = 3;
+    repeated DungeonMapEgoGiftFormat updatedEgoGifts = 4;
+}
+
+message ReqEnterStoryMirrorDungeonMapNodeBattleAfterChoiceCommand {
+    repeated int32 participatedPids = 1;
+    repeated int32 abnormalityids = 2;
+    repeated StoryMirrorDungeonSaveUnitInfoFormat dungeonUnitList = 3;
+}
+
+message ReqExitStoryMirrorDungeonMapNodeCommand {
+    DungeonMapNodeFormat currentnode = 1;
+    repeated StoryMirrorDungeonSaveUnitInfoFormat dungeonunitlist = 2;
+    int32 noderesult = 3;
+    DungeonChoiceEventSaveDataFormat choiceEventData = 4;
+    BattlePassParameterFormat battlePassParameters = 5;
+    repeated AbnormalityUnlockInformationFormat abnormalityLogs = 6;
+    int32 isupdatedEgoSkillStock = 7;
+    repeated DungeonEgoSkillStockFormat egoSkillStockList = 8;
+    repeated DungeonMapEgoGiftFormat updatedEgoGifts = 9;
+    repeated DungeonStatisticsDataFormat statistics = 10;
+    int32 usedDanteAbilityCount = 11;
+}
+
+message ReqUpdateStoryMirrorDungeonUnitsCommand {
+    repeated StoryMirrorDungeonSaveUnitInfoFormat dungeonunitlist = 1;
+}
+
+message ReqAcquireRewardEgoGiftsStoryMirrorDungeonCommand {
+    repeated int32 selectIndexList = 1;
+}
+
+message ReqPurchaseHealStoryMirrorDungeonCommand {
+    int32 idx = 1;
+    int32 pid = 2;
+}
+
+message ReqPurchaseFormationStoryMirrorDungeonCommand {
+    repeated MirrorDungeonFormationFormat formation = 1;
+}
+
+message ReqPurchaseUpgradePersonalityStoryMirrorDungeonCommand {
+    int32 idx = 1;
+}
+
+message ReqPurchaseEgoGiftStoryMirrorDungeonCommand {
+    int32 idx = 1;
+}
+
+message ReqSellEgoGiftStoryMirrorDungeonCommand {
+    int32 id = 1;
+}
+
+message ReqAcquireStartEgoGiftsStoryMirrorDungeonCommand {
+    int32 selectedSetId = 1;
+    repeated int32 selectedEgoGiftIds = 2;
+}
+
+message ReqUpgradeEgoGiftStoryMirrorDungeonCommand {
+    int32 egoGiftId = 1;
+}
+
+message ReqCombineEgoGiftStoryMirrorDungeonCommand {
+    repeated int32 materialEgoGiftIds = 1;
+    string keyword = 2; // MIRRORDUNGEON_EGOGIFT_KEYWORD 
+}
+
+message ReqRefreshStartEgoGiftsStoryMirrorDungeonCommand {}
+
+message ReqRefreshShopEgoGiftsStoryMirrorDungeonCommand {
+    string keyword = 1; // MIRRORDUNGEON_EGOGIFT_KEYWORD 
+}
+
+message ReqRemoveStoryMirrorDungeonEgoGift {
+    int32 egogiftId = 1;
+}
+
+message ReqEnterRailwayDungeon {
+    int32 dungeonId = 1;
+    repeated RailwayUnitInfoFormat personalities = 2;
+}
+
+message ReqEnterRailwayDungeonMapNodeCommand {
+    int32 dungeonId = 1;
+    int32 nodeid = 2;
+    repeated int32 abnormalityids = 3;
+    repeated int32 participatedPIds = 4;
+    repeated AbnormalityUnlockInformationFormat abnormalityLogs = 5;
+}
+
+message ReqGetRailwayDungeonNodeAndLogAllCommand {
+    int32 dungeonId = 1;
+}
+
+message ReqExitRailwayDungeonMapNodeCommand {
+    int32 dungeonId = 1;
+    uint32 nodeid = 2;
+    repeated RailwayUnitStatusFormat unitStatusList = 3;
+    repeated RailwayEGOStockFormat egoSkillStockList = 4;
+    BattlePassParameterFormat battlePassParameters = 5;
+    repeated AbnormalityUnlockInformationFormat abnormalityLogs = 6;
+    repeated RailwayStatisticsDataFormat statistics = 7;
+    int32 usedDanteAbilityCount = 8;
+    int32 usedDanteAbilityId = 9;
+    int32 clearTurn = 10;
+    bool iswin = 11;
+    SaveDataForRailwayDungeon enemy = 12;
+}
+
+message ReqExitRailwayDungeonRestNodeCommand {
+    int32 dungeonId = 1;
+    int32 nodeid = 2;
+    repeated RailwayUnitInfoFormat personalities = 3;
+}
+
+message ReqExitRailwayDungeonCommand {
+    int32 dungeonId = 1;
+    bool isClear = 2;
+}
+
+message ReqGiveUpRailwayDungeonNodeCommand {
+    int32 dungeonId = 1;
+    uint32 nodeid = 2;
+    repeated AbnormalityUnlockInformationFormat abnormalityLogs = 3;
+}
+
+message ReqGiveUpRailwayDungeonNodeInBattle {
+    int32 dungeonid = 1;
+    int32 nodeid = 2;
+    BattlePassParameterFormat battlePassParameters = 3;
+    repeated AbnormalityUnlockInformationFormat abnormalityLogs = 4;
+}
+
+message ReqSelectRailwayDungeonBuffCommand {
+    int32 dungeonId = 1;
+    repeated RailwayBuffSetRequestFormat selectedBuffs = 2;
+}
+
+message ReqAcquireRailwayDungeonReward {
+    int32 dungeonId = 1;
+}

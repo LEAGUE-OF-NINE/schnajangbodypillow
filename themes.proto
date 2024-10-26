@@ -1,0 +1,62 @@
+syntax = "proto3";
+
+import "schnajangbodypillow/formats_n_shit.proto";
+
+message MirrorDungeonThemeFloorStaticDataList {
+    repeated MirrorDungeonThemeFloorStaticData list = 1;
+}
+
+message MirrorDungeonThemeFloorStaticData {
+    int32 id = 1;
+    UnlockCondition unlockCondition = 2;
+    MirrorDungeonThemeFloorUIConfigsStaticData uiConfigs = 3;
+    repeated MirrorDungeonThemeExceptionCondition exceptionConditions = 4;
+    repeated int32 egoGiftPool = 5;
+    repeated int32 specificEgoGiftPool = 6;
+    repeated MirrorDungeonMapGenSequenceOption mapGenSequence = 7;
+    repeated MirrorDungeonOriginBattleVictoryCostValue battlevictorycostvaluList = 8;
+}
+
+message UnlockCondition {
+    int32 mainChapterId = 1;
+    int32 subChapterId = 2;
+    int32 nodeId = 3;
+    int32 unlockCode = 4;
+    // Element is in formats.proto
+    Element possession = 5;
+}
+
+message MirrorDungeonThemeExceptionCondition {
+    int32 dungeonIdx = 1;
+    repeated int32 selectableFloors = 2;
+}
+
+message MirrorDungeonMapGenSequenceOption {
+    string type = 1;
+    repeated int32 numberList = 2;
+}
+
+message StringKey_StringValue {
+    string key = 1;
+    string value = 2;
+}
+
+message MirrorDungeonThemeFloorUIConfigsStaticData {
+    string packSpriteId = 1;
+    string bossSpriteId = 2;
+    repeated int32 showBossIds = 3;
+    string attributeType = 4;
+    string textColor = 5;
+    bool isHideLogo = 6;
+    bool isShowWarning = 7;
+    repeated StringKey_StringValue mapOptions = 8;
+    int32 attributeTypeArrowCount = 9;
+    string attackType = 10;
+    int32 attackTypeArrowCount = 11;
+}
+
+message MirrorDungeonOriginBattleVictoryCostValue {
+    // See ENCOUNTER enum in formats.proto
+    string encounterType = 1;
+    int32 cost = 2;
+}
